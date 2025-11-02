@@ -1,48 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>OCHETO - Blog y Sistema de Ventas</title>
-    <meta name="description" content="Sistema de ventas para la Cafetería OCHETO. Productos, análisis y diagramas." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería -- OCHETO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-
 <body>
-  <div class="container">
-    <header>
-      <div>
-        <div>
-          <div>Cafetería OCHETO</div>
-          <div>Blog · Análisis · Sistema de Ventas</div>
+    <!-- Header y Navegación -->
+    <header id="header">
+        <div class="container">
+            <nav class="nav-container">
+                <div class="logo">
+                    <!-- <div class="logo-icon"><img src="assets/img/logo.jpg"></div> -->
+                    <div class="logo-text">OCHETO COFFEE</div>
+                </div>
+                <!-- <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul> -->
+            </nav>
         </div>
-      </div>
     </header>
 
-    <main>
-      <section>
-        <div>
-          <h1>Bienvenido al Blog de Análisis y Diseño — OCHETO</h1>
-          <p>Documenta el catálogo de productos, define los flujos de venta, muestra diagramas (DFD, ER, UML) y publica informes técnicos del sistema de ventas para la cafetería.</p>
+    <!-- Banner Principal -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Experiencia Cafetera Excepcional</h1>
+            <p>En Ocheto Coffee apostamos por la calidad en cada taza: utilizamos granos seleccionados, bebidas de calidad preparadas con cuidado y acompañamientos frescos que complementan tu experiencia.</p>
+            <a href="#productos" class="cta-button">Ver Productos</a>
+        </div>
+    </section>
 
+    <!-- Productos Destacados -->
 
-      </section>
+    <!-- Sobre Nosotros -->
+    <section class="about" id="sobre-nosotros">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Nuestra Historia</h2>
+                    
+                </div>
+                <div class="about-image"></div>
+            </div>
+        </div>
+    </section>
 
-
-    </main>
-
-    <footer>
-      <div>© OCHETO <span id="year"></span></div>
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>OCHETO COFFEE</h3>
+                    <p>La mejor experiencia cafetera en un ambiente elegante y acogedor.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Horarios</h3>
+                    <ul>
+                        <li>Lunes a Viernes: </li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li>Dirección: C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel Sajama., La Paz, Bolivia</li>
+                        <li>Teléfono: </li>
+                        <li>Email: </li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Síguenos</h3>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+            </div>
+        </div>
     </footer>
-  </div>
 
-  <script>
-    // Pequeños scripts utilitarios: actualiza año y ejemplo de navegación
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Reemplaza por comportamiento real si separas main.js
-  </script>
 </body>
+<script src="assets/js/main.js"></script>
 </html>
