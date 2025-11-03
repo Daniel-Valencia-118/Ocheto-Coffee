@@ -44,6 +44,7 @@ header {
 
 .container {
     width: 90%;
+    /* height: 10vh; */
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -57,26 +58,22 @@ header {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-primary);
+    width: 50px;
+    height: 50px;
+    /* background-color: var(--color-primary); */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.2rem;
 }
 
 .logo-text {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--color-accent);
 }
@@ -142,7 +139,7 @@ header {
     margin-bottom: 1.5rem;
     line-height: 1.2;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(50px);
     animation: fadeInUp 1s forwards 0.5s;
 }
 
@@ -294,6 +291,11 @@ footer {
     gap: 3rem;
     margin-bottom: 2rem;
 }
+
+/* .footer-column {
+    flex: 0 0 auto;
+    width: 20rem;
+} */
 
 .footer-column h3 {
     font-family: var(--font-heading);
