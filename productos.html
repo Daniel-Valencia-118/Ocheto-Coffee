@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>  
+      .producto-card img {
+        height: 200px;
+        object-fit: cover;
+      } 
+    </style>
+  </head>
+  <body>
+    <main>
+      <h2 class="text-center mb-4">Nuestros Productos</h2>
+      <div class="row g-4" id="productos-lista">
+       <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/12.jpg" class="card-img-top" alt="Espresso">
+            <div class="card-body text-center">
+                <h5 class="card-title">Café Espresso</h5>
+                <p class="card-text text-muted">Café intenso y aromático, preparado con 
+                  granos finamente molidos.</p>
+                <p class="fw-bold">Bs 10</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/61.jpg" class="card-img-top" alt="Americano">
+            <div class="card-body text-center">
+                <h5 class="card-title">Café Americano</h5>
+                <p class="card-text text-muted">Espresso suave alargado con agua caliente, 
+                  ideal para quienes disfrutan un sabor más ligero.</p>
+                <p class="fw-bold">Bs 10</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto" >
+            <div class="card producto-card shadow-sm">
+            <img src="img/60.jpg" class="card-img-top" alt="Capuccino">
+            <div class="card-body text-center">
+                <h5 class="card-title">Capuccino</h5>
+                <p class="card-text text-muted">Mezcla equilibrada de espresso, 
+                  leche vaporizada y espuma cremosa.</p>
+                <p class="fw-bold">Bs 12</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/64.jpg" class="card-img-top" alt="Latte Mocca">
+            <div class="card-body text-center">
+                <h5 class="card-title">Latte Mocca</h5>
+                <p class="card-text text-muted">Delicioso café con leche
+                   y un toque de chocolate.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/62.jpg" class="card-img-top" alt="Latte Ocheto">
+            <div class="card-body text-center">
+                <h5 class="card-title">Latte Ocheto</h5>
+                <p class="card-text text-muted">Latte especial con sabor a la mezcla 
+                  exclusiva de la casa “Ocheto”.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/52.jpg" class="card-img-top" alt="Latte Vainilla">
+            <div class="card-body text-center">
+                <h5 class="card-title">Latte Vainilla</h5>
+                <p class="card-text text-muted">Café suave con leche espumada
+                   y aroma dulce de vainilla.</p>
+                <p class="fw-bold">Bs 12</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/36.jpg" class="card-img-top" alt="Latte Strawberry">
+            <div class="card-body text-center">
+                <h5 class="card-title">Latte Strawberry</h5>
+                <p class="card-text text-muted">Latte con un toque frutal de fresa, ideal 
+                  para los que buscan algo diferente.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/59.jpg" class="card-img-top" alt="Latte Coco">
+            <div class="card-body text-center">
+                <h5 class="card-title">Latte Coco</h5>
+                <p class="card-text text-muted">Combinación cremosa de café con 
+                  leche y sabor tropical a coco.</p>
+                <p class="fw-bold">Bs 12</p>
+            </div>
+            </div>
+        </div>
+      <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/21.jpg" class="card-img-top" alt="Frapuchino">
+            <div class="card-body text-center">
+                <h5 class="card-title">Frapuchino</h5>
+                <p class="card-text text-muted">Café frío batido con hielo y crema, 
+                  refrescante y energético.</p>
+                <p class="fw-bold">Bs 13</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/4.jpg" class="card-img-top" alt="Smoothie">
+            <div class="card-body text-center">
+                <h5 class="card-title">Smoothie</h5>
+                <p class="card-text text-muted">Bebida cremosa a base de frutas 
+                  naturales, ideal para días calurosos.</p>
+                <p class="fw-bold">Bs 14</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/65.jpg" class="card-img-top" alt="Ice latte">
+            <div class="card-body text-center">
+                <h5 class="card-title">Ice latte</h5>
+                <p class="card-text text-muted">Café con leche servido con hielo, 
+                  suave y refrescante.</p>
+                <p class="fw-bold">Bs 13</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/44.jpg" class="card-img-top" alt="Malteadas">
+            <div class="card-body text-center">
+                <h5 class="card-title">Malteadas</h5>
+                <p class="card-text text-muted">Clásicas milkshakes cremosas 
+                  con sabor a tu elección.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/63.jpg" class="card-img-top" alt="Afogato">
+            <div class="card-body text-center">
+                <h5 class="card-title">Afogato</h5>
+                <p class="card-text text-muted">Helado bañado con un espresso caliente,
+                   una delicia italiana.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/34.jpg" class="card-img-top" alt="Matcha">
+            <div class="card-body text-center">
+                <h5 class="card-title">Matcha</h5>
+                <p class="card-text text-muted">Té verde japonés con leche, saludable
+                   y lleno de energía natural.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+         <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/72.jpg" class="card-img-top" alt="Rollo de canela">
+            <div class="card-body text-center">
+                <h5 class="card-title">Rollo de canela</h5>
+                <p class="card-text text-muted">Esponjoso rollo con aroma a canela
+                   y glaseado dulce.</p>
+                <p class="fw-bold">Bs 12</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/73.jpg" class="card-img-top" alt="Galleta Ocheto">
+            <div class="card-body text-center">
+                <h5 class="card-title">Galleta Ocheto</h5>
+                <p class="card-text text-muted">Galleta artesanal con el sabor 
+                  característico de la casa.</p>
+                <p class="fw-bold">Bs 12</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/43.jpg" class="card-img-top" alt="Galleta">
+            <div class="card-body text-center">
+                <h5 class="card-title">Galleta</h5>
+                <p class="card-text text-muted">Galleta tradicional con chispas de chocolate 
+                  recién horneada.</p>
+                <p class="fw-bold">Bs 10</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/53.jpg" class="card-img-top" alt="Brownie">
+            <div class="card-body text-center">
+                <h5 class="card-title">Brownie Ocheto</h5>
+                <p class="card-text text-muted">Bizcocho húmedo de chocolate, 
+                  irresistible para los amantes del cacao.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/42.jpg" class="card-img-top" alt="Alfajor Chocolate">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Chocolate</h5>
+                <p class="card-text text-muted">Alfajor clásico con relleno dulce 
+                  cubierto de chocolate.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/25.jpg" class="card-img-top" alt="Alfajor Chocolate Oscuro">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Chocolate Oscuro</h5>
+                <p class="card-text text-muted">Versión intensa con cobertura de cacao
+                   amargo.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+         <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/47.jpg" class="card-img-top" alt="Alfajor Chocolate Blanco y Naranja">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Chocolate Blanco y Naranja</h5>
+                <p class="card-text text-muted">Mezcla perfecta de dulzura y 
+                  frescura cítrica.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/68.jpg" class="card-img-top" alt="Alfajor Chocolate y Dulce de Leche">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Chocolate y Dulce de Leche</h5>
+                <p class="card-text text-muted">Clásico alfajor con dulce de leche
+                   cubierto de chocolate.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/69.jpg" class="card-img-top" alt="Alfajor Chocolate con café">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Chocolate con café</h5>
+                <p class="card-text text-muted">Alfajor con un toque de café que realza su sabor.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/70.jpg" class="card-img-top" alt="Alfajor Jack Daniels">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Jack Daniels</h5>
+                <p class="card-text text-muted">Alfajor gourmet con un toque de whisky Jack Daniels.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/71.jpg" class="card-img-top" alt="Alfajor Fernet">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Fernet</h5>
+                <p class="card-text text-muted">Alfajor con un sutil sabor a Fernet.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/40.jpg" class="card-img-top" alt="Croissant">
+            <div class="card-body text-center">
+                <h5 class="card-title">Croissant</h5>
+                <p class="card-text text-muted">Hojaldre francés, crujiente y mantecoso, 
+                  perfecto para acompañar tu café.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+         <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/50.jpg" class="card-img-top" alt="Latte Calbaza">
+            <div class="card-body text-center">
+                <h5 class="card-title">Latte Calbaza</h5>
+                <p class="card-text text-muted">Latte con especias otoñales. Perfecto para Hallowen</p>
+                <p class="fw-bold">Bs 20</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/66.jpg" class="card-img-top" alt="Spice Latte">
+            <div class="card-body text-center">
+                <h5 class="card-title">Spice Latte</h5>
+                <p class="card-text text-muted">Café con mezcla de especias aromáticas, cálido y reconfortante. Edición especial por Hallowen</p>
+                <p class="fw-bold">Bs 20</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/31.jpg" class="card-img-top" alt="Chocolate Caliente Navideño ">
+            <div class="card-body text-center">
+                <h5 class="card-title">Chocolate Caliente Navideño </h5>
+                <p class="card-text text-muted">Chocolate espeso con canela y notas festivas.</p>
+                <p class="fw-bold">Bs 20</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/24.jpg" class="card-img-top" alt="Alfajor Oreo">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alfajor Oreo</h5>
+                <p class="card-text text-muted">Alfajor relleno con crema Oreo y cobertura de chocolate.</p>
+                <p class="fw-bold">Bs 19</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/55.jpg" class="card-img-top" alt="Barra de Chocolate frutos secos">
+            <div class="card-body text-center">
+                <h5 class="card-title">Barra de Chocolate frutos secos</h5>
+                <p class="card-text text-muted">Chocolate artesanal con almendras, nueces y maní.</p>
+                <p class="fw-bold">Bs 16</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/56.jpg" class="card-img-top" alt="Barra de Chocolate gomitas">
+            <div class="card-body text-center">
+                <h5 class="card-title">Barra de Chocolate gomitas</h5>
+                <p class="card-text text-muted">Divertida mezcla de chocolate con trocitos de gomitas.</p>
+                <p class="fw-bold">Bs 16</p>
+            </div>
+            </div>
+        </div>
+         <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/57.jpg" class="card-img-top" alt="Barra de Chocolate galletitas">
+            <div class="card-body text-center">
+                <h5 class="card-title">Barra de Chocolate galletitas</h5>
+                <p class="card-text text-muted">Chocolate con trozos crujientes de galleta.</p>
+                <p class="fw-bold">Bs 16</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/58.jpg" class="card-img-top" alt="Barra de Chocolate frutas deshidratadas">
+            <div class="card-body text-center">
+                <h5 class="card-title">Barra de Chocolate frutas deshidratadas</h5>
+                <p class="card-text text-muted">Dulce combinación de chocolate y frutas naturales.</p>
+                <p class="fw-bold">Bs 16</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/46.jpg" class="card-img-top" alt="Bolsa de café">
+            <div class="card-body text-center">
+                <h5 class="card-title">Bolsa de café de 250gr</h5>
+                <p class="card-text text-muted">Café molido o en grano de alta calidad para preparar en casa.</p>
+                <p class="fw-bold">Bs 60</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/67.jpg" class="card-img-top" alt="Moledora de Café">
+            <div class="card-body text-center">
+                <h5 class="card-title">Moledora de Café</h5>
+                <p class="card-text text-muted">Herramienta esencial para disfrutar del café recién molido.</p>
+                <p class="fw-bold">Bs 65</p>
+            </div>
+            </div>
+        </div>
+         <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/28.jpg" class="card-img-top" alt="Latte Chai">
+            <div class="card-body text-center">
+                <h5 class="card-title">Latte Chai</h5>
+                <p class="card-text text-muted">Bebida SIN CAFÉ preparada a base de té negro especiado con cardamomo,
+                  anís, canel, nuez moscada y jengibre.
+                </p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/28.jpg" class="card-img-top" alt="Ice Latte Chai">
+            <div class="card-body text-center">
+                <h5 class="card-title">Ice Latte Chai</h5>
+                <p class="card-text text-muted">Bebida SIN CAFÉ preparada a base de té negro especiado con cardamomo,
+                  anís, canel, nuez moscada y jengibre.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 producto">
+            <div class="card producto-card shadow-sm">
+            <img src="img/28.jpg" class="card-img-top" alt="Frappe Chai">
+            <div class="card-body text-center">
+                <h5 class="card-title">Frappe Chai</h5>
+                <p class="card-text text-muted">Bebida SIN CAFÉ preparada a base de té negro especiado con cardamomo,
+                  anís, canel, nuez moscada y jengibre.</p>
+                <p class="fw-bold">Bs 15</p>
+            </div>
+            </div>
+        </div>
+    </main>
+  </body>
+</html>
