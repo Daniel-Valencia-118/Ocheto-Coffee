@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OCHETO - Blog y Sistema de Ventas</title>
+    <meta name="description" content="Sistema de ventas para la Cafetería OCHETO. Productos, análisis y diagramas." />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/analisis.css">
+</head>
+<body>
+    <header id="header">
+        <div class="menu-container">
+            <nav class="nav-container">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <a href="index.html">
+                            <img src="assets/img/logo.jpg" style="height: 60px; width: 60px; border-radius: 50%;">
+                        </a>
+                    </div>
+                    <div class="logo-text">OCHETO COFFEE</div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li class="tooltip"><a href="marcoTeorico.html">Marco Teorico</a>
+                        <span class="tooltip-cont">*Marco teorico*</span>
+                    </li>
+                    <li class="tooltip"><a href="analisisEstructurado.html">Analisis Estructurado</a>
+                        <span class="tooltip-cont">*Analisis Estructurado*</span>
+                    </li>
+                    <li class="tooltip"><a href="orientadoObjetos.html">Orientado a objetos</a>
+                        <span class="tooltip-cont">*orientado a objetos*</span>
+                    </li>
+                    <li class="tooltip"><a href="#video">Video</a>
+                        <span class="tooltip-cont">*video*</span>
+                    </li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+
+    <main class="container">  
+        <section id="analisis-objetos">
+            <h2 class="h2-t">III. ANÁLISIS Y DISEÑO ORIENTADO A OBJETOS</h2>
+            
+            <div class="content">
+                <h3 class="tooltip-trigger">Diagrama de Casos de Uso
+                    <span class="tooltip-content">
+                        Representación de las funcionalidades del sistema desde la perspectiva de los usuarios.
+                    </span>
+                </h3>
+                <p>Casos de uso identificados:</p>
+                <ul>
+                    <li>Realizar pedido (Cliente)</li>
+                    <li>Gestionar inventario (Administrador)</li>
+                    <li>Generar reporte de ventas (Administrador)</li>
+                    <li>Registrar cliente (Cajero)</li>
+                </ul>
+                
+                <h3 class="tooltip-trigger">Diagrama de Clases
+                    <span class="tooltip-content">
+                        Representación estática de las clases del sistema, sus atributos, operaciones y relaciones.
+                    </span>
+                </h3>
+                <p>Clases principales:</p>
+                <ul>
+                    <li>Cliente</li>
+                    <li>Pedido</li>
+                    <li>Producto</li>
+                    <li>Inventario</li>
+                    <li>Empleado</li>
+                </ul>
+                
+                <h3 class="tooltip-trigger">Diagrama de Secuencia
+                    <span class="tooltip-content">
+                        Representación de la interacción entre objetos en el tiempo para un caso de uso específico.
+                    </span>
+                </h3>
+                <p>Para el caso de uso "Realizar Pedido":</p>
+                <ul>
+                    <li>Cliente → Sistema: Solicitar menú</li>
+                    <li>Sistema → Cliente: Mostrar menú</li>
+                    <li>Cliente → Sistema: Seleccionar productos</li>
+                    <li>Sistema → Inventario: Verificar disponibilidad</li>
+                    <li>Inventario → Sistema: Confirmar disponibilidad</li>
+                    <li>Sistema → Cliente: Mostrar total</li>
+                </ul>
+                
+                <h3 class="tooltip-trigger">Diagrama de Actividad
+                    <span class="tooltip-content">
+                        Representación de los flujos de trabajo y procesos de negocio del sistema.
+                    </span>
+                </h3>
+                <p>Proceso de preparación de pedido:</p>
+                <ul>
+                    <li>Recibir pedido</li>
+                    <li>Verificar ingredientes</li>
+                    <li>Preparar productos</li>
+                    <li>Entregar pedido</li>
+                    <li>Actualizar inventario</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+        <footer id="contacto">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>OCHETO COFFEE</h3>
+                    <p>La mejor experiencia cafetera en un ambiente elegante y acogedor.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Horarios</h3>
+                    <ul>
+                        <li>Lunes a Viernes: 7:00 - 20:00</li>
+                        <li>Sábados: 8:00 - 18:00</li>
+                        <li>Domingos: 9:00 - 16:00</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li>Teléfono: 78823697</li>
+                        <li>Email: angelo_17jm@hotmail.com</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Síguenos</h3>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Dirección</h3>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.38414258601!2d-68.13554243390426!3d-16.49898739394061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f21001b5174c5%3A0x824aeeaf8c636ce1!2sOcheto%20Coffee!5e0!3m2!1ses-419!2sus!4v1762118633585!5m2!1ses-419!2sus"
+                        width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <p>C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel
+                        Sajama., La
+                        Paz, Bolivia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

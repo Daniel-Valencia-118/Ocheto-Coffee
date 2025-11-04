@@ -1,10 +1,15 @@
 /* Variables de colores y fuentes */
 :root {
-    --color-primary: #8B4513; /* Marrón café elegante */
-    --color-secondary: #D4A76A; /* Beige cálido */
-    --color-accent: #5D4037; /* Marrón oscuro */
-    --color-light: #F5F5F5; /* Blanco roto */
-    --color-dark: #2C2C2C; /* Casi negro */
+    --color-primary: #8B4513;
+    /* Marrón café elegante */
+    --color-secondary: #D4A76A;
+    /* Beige cálido */
+    --color-accent: #5D4037;
+    /* Marrón oscuro */
+    --color-light: #F5F5F5;
+    /* Blanco roto */
+    --color-dark: #2C2C2C;
+    /* Casi negro */
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
 }
@@ -44,7 +49,6 @@ header {
 
 .container {
     width: 90%;
-    /* height: 10vh; */
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -64,7 +68,6 @@ header {
 .logo-icon {
     width: 50px;
     height: 50px;
-    /* background-color: var(--color-primary); */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -73,7 +76,7 @@ header {
 
 .logo-text {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-accent);
 }
@@ -111,28 +114,86 @@ header {
     width: 100%;
 }
 
-/* Banner principal */
-.hero {
+
+/* ------------------------ */
+.tooltip-cont {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: -45px; /* aparece debajo del enlace */
+    /* left: 50%; */
+    transform: translateX(-80%);
+    background-color: var(--color-accent);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* evita bloquear el hover */
+    z-index: 10;
+}
+
+.tooltip1:hover .tooltip-cont {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Banner rotatorio */
+.banner-section {
+    margin-top: 80px;
     height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    background-size: cover;
+    background-position: center;
+}
+
+.banner-slide.active {
+    opacity: 1;
+}
+
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 800px;
+}
+
+.banner-logo {
+    width: 200px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    margin: 0 auto 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../img/27.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    text-align: center;
+    color: var(--color-accent);
+    font-size: 2.5rem;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1s forwards 0.5s;
 }
 
-.hero-content {
-    max-width: 800px;
-    padding: 0 2rem;
-    z-index: 2;
-}
-
-.hero h1 {
+.banner-title {
     font-family: var(--font-heading);
     font-size: 4rem;
     font-weight: 700;
@@ -143,7 +204,7 @@ header {
     animation: fadeInUp 1s forwards 0.5s;
 }
 
-.hero p {
+.banner-subtitle {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     opacity: 0;
@@ -172,7 +233,31 @@ header {
 }
 
 /* Sección de productos destacados */
-.featured {
+.producto-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.categoria-btn.active {
+    background-color: #5d4037;
+    color: #fff;
+}
+.container.my-5 {
+    margin-top: 100px !important;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+.text-center.mb-4 {
+    display: block;
+    padding: 12px 30px;
+    background-color: #5d4037;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+}
+/* .featured {
     padding: 5rem 0;
     background-color: white;
 }
@@ -241,7 +326,7 @@ header {
     font-weight: 700;
     color: var(--color-primary);
     font-size: 1.1rem;
-}
+} */
 
 /* Sección sobre nosotros */
 .about {
@@ -291,11 +376,6 @@ footer {
     gap: 3rem;
     margin-bottom: 2rem;
 }
-
-/* .footer-column {
-    flex: 0 0 auto;
-    width: 20rem;
-} */
 
 .footer-column h3 {
     font-family: var(--font-heading);
@@ -354,8 +434,14 @@ footer {
         display: none;
     }
 
-    .hero h1 {
+    .banner-title {
         font-size: 2.5rem;
+    }
+
+    .banner-logo {
+        width: 100px;
+        height: 100px;
+        font-size: 2rem;
     }
 
     .about-content {
@@ -366,3 +452,4 @@ footer {
         height: 300px;
     }
 }
+

@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafetería -- OCHETO</title>
+    <title>Cafetería - OCHETO</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
+
 <body>
     <!-- Header y Navegación -->
     <header id="header">
         <div class="container">
             <nav class="nav-container">
                 <div class="logo">
-                    <!-- imagen en circulo del logo de la cafeteria -->
                     <div class="logo-icon">
                         <a href="index.html">
                             <img src="assets/img/logo.jpg" style="height: 60px; width: 60px; border-radius: 50%;">
@@ -23,26 +25,42 @@
                     </div>
                     <div class="logo-text">OCHETO COFFEE</div>
                 </div>
-                <!-- <ul class="nav-links">
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#productos">Productos</a></li>
-                    <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li class="tooltip1"><a href="marcoTeorico.html">Marco Teorico</a>
+                        <span class="tooltip-cont">*Marco teorico*</span>
+                    </li>
+                    <li class="tooltip1"><a href="analisisEstructurado.html">Analisis Estructurado</a>
+                        <span class="tooltip-cont">*Analisis Estructurado*</span>
+                    </li>
+                    <li class="tooltip1"><a href="orientadoObjetos.html">Orientado a objetos</a>
+                        <span class="tooltip-cont">*orientado a objetos*</span>
+                    </li>
+                    <li class="tooltip1"><a href="#video">Video</a>
+                        <span class="tooltip-cont">*video*</span>
+                    </li>
                     <li><a href="#contacto">Contacto</a></li>
-                </ul> -->
+                </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Banner Principal -->
-    <section class="hero" id="inicio">
-        <div class="hero-content">
-            <h1>Experiencia Cafetera Excepcional</h1>
-            <p>En Ocheto Coffee apostamos por la calidad en cada taza: utilizamos granos seleccionados, bebidas de calidad preparadas con cuidado y acompañamientos frescos que complementan tu experiencia.</p>
-            <a href="#productos" class="cta-button">Ver Productos</a>
+    <!-- Banner Rotatorio -->
+    <section class="banner-section" id="inicio">
+        <div class="banner-slide active" id="banner1"></div>
+        <div class="banner-slide" id="banner2"></div>
+        <div class="banner-slide" id="banner3"></div>
+
+        <div class="banner-content">
+            <div class="banner-logo">
+                <img src="assets/img/logo.jpg" style="height: 100%; width: 100%; border-radius: 50%;">
+            </div>
+            <h1 class="banner-title">OCHETO COFFEE</h1>
+            <p class="banner-subtitle">Experiencia Cafetera Excepcional</p>
+            <a href="productos.html" class="cta-button">Ver Productos</a>
         </div>
     </section>
-
-    <!-- Productos Destacados -->
 
     <!-- Sobre Nosotros -->
     <section class="about" id="sobre-nosotros">
@@ -50,7 +68,11 @@
             <div class="about-content">
                 <div class="about-text">
                     <h2>OCHETO COFFEE EXPRESS</h2>
-                    <p>En Ocheto Coffee apostamos por la calidad en cada taza: utilizamos granos seleccionados, bebidas de calidad preparadas con cuidado y acompañamientos frescos que complementan tu experiencia.</p>
+                    <p>En Ocheto Coffee apostamos por la calidad en cada taza: utilizamos granos seleccionados, bebidas
+                        de calidad
+                        preparadas con cuidado y acompañamientos frescos que complementan tu experiencia.</p>
+                    <p>Nuestro espacio está diseñado para que disfrutes de momentos especiales, ya sea trabajando,
+                        estudiando o compartiendo con amigos.</p>
                 </div>
                 <div class="about-image"></div>
             </div>
@@ -68,7 +90,9 @@
                 <div class="footer-column">
                     <h3>Horarios</h3>
                     <ul>
-                        <li>Lunes a Viernes: </li>
+                        <li>Lunes a Viernes: 7:00 - 20:00</li>
+                        <li>Sábados: 8:00 - 18:00</li>
+                        <li>Domingos: 9:00 - 16:00</li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -90,14 +114,12 @@
                     <h3>Dirección</h3>
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.38414258601!2d-68.13554243390426!3d-16.49898739394061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f21001b5174c5%3A0x824aeeaf8c636ce1!2sOcheto%20Coffee!5e0!3m2!1ses-419!2sus!4v1762118633585!5m2!1ses-419!2sus"
-                        width="100%"
-                        height="50%"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
+                        width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
-                    <p>C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel Sajama., La Paz, Bolivia</p>
+                    <p>C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel
+                        Sajama., La
+                        Paz, Bolivia</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -106,6 +128,7 @@
         </div>
     </footer>
 
+    <script src="assets/js/main.js"></script>
 </body>
-<script src="assets/js/main.js"></script>
+
 </html>
