@@ -46,23 +46,3 @@ document.addEventListener('DOMContentLoaded', function () {
     // Cambiar banner cada 10 segundos
     setInterval(changeBanner, 5000);
 });
-
-
-const botones = document.querySelectorAll('.categoria-btn');
-const productos = document.querySelectorAll('.producto');
-
-botones.forEach(btn => {
-    btn.addEventListener('click', () => {
-        botones.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.getAttribute('data-cat');
-
-        productos.forEach(prod => {
-            if (cat === 'all' || prod.getAttribute('data-cat') === cat) {
-                prod.style.display = 'block';
-            } else {
-                prod.style.display = 'none';
-            }
-        });
-    });
-});
