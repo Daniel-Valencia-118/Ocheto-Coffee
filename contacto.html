@@ -1,259 +1,1358 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" x-data="contactApp()" x-cloak>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCHETO - Contacto</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/contacto.css">
+    <title>OCHETO COFFEE - Contacto</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Tailwind CSS PRODUCTION VERSION -->
+    <script src="https://cdn.tailwindcss.com/3.4.1?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        :root {
+            --color-primary: #A8714A;    /* Marrón café más suave y moderno */
+            --color-secondary: #E8D0B3;  /* Beige más claro y elegante */
+            --color-accent: #4A3520;     /* Marrón oscuro más profundo */
+            --color-light: #FAF7F2;      /* Fondo más cálido y suave */
+            --color-dark: #2A2118;       /* Texto más cálido */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        
+        .font-heading {
+            font-family: var(--font-heading);
+        }
+        
+        .font-body {
+            font-family: var(--font-body);
+        }
+        
+        .text-primary { color: var(--color-primary); }
+        .text-secondary { color: var(--color-secondary); }
+        .text-accent { color: var(--color-accent); }
+        .bg-primary { background-color: var(--color-primary); }
+        .bg-secondary { background-color: var(--color-secondary); }
+        .bg-accent { background-color: var(--color-accent); }
+        .bg-light { background-color: var(--color-light); }
+
+            /* Custom animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Dropdown menu styles */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-secondary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+
+        /* Glass effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Video container styles */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Content tooltip styles */
+        .content-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .content-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 280px;
+            background-color: var(--color-accent);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 12px;
+            position: absolute;
+            z-index: 100;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -140px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--color-accent) transparent transparent transparent;
+        }
+
+        .content-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Anchor link smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Section spacing */
+        section {
+            scroll-margin-top: 6rem;
+        }
+        
+        /* Animaciones personalizadas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .animate-slide-left {
+            animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .animate-slide-right {
+            animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        /* Estilos personalizados para contacto */
+        .contact-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .form-input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(168, 113, 74, 0.1);
+        }
+        
+        .form-input:hover {
+            border-color: var(--color-primary);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(168, 113, 74, 0.2);
+        }
+        
+        .contact-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(168, 113, 74, 0.1), rgba(232, 208, 179, 0.1));
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon-wrapper {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(168, 113, 74, 0.2), rgba(232, 208, 179, 0.2));
+        }
+        
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--color-light);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-secondary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <!-- Header y Navegación -->
-    <header id="header">
-        <div class="container">
-            <nav class="nav-container">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <a href="index.html">
-                            <img src="assets/img/logo.jpg" style="height: 60px; width: 60px; border-radius: 50%;">
+<body class="font-body text-gray-800 bg-light">
+    
+    <!-- HEADER COPIADO DESDE INDEX.HTML -->
+    <header id="header" x-data="{ 
+                scrolled: false, 
+                mobileMenuOpen: false,
+                searchOpen: false,
+                activeDropdown: null
+            }" @scroll.window="scrolled = window.scrollY > 50"
+        :class="scrolled ? 'py-3 shadow-lg bg-white/95 backdrop-blur-sm' : 'py-4 bg-white/90'"
+        class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3 group">
+                        <div
+                            class="h-12 w-12 md:h-14 md:w-14 rounded-full overflow-hidden border-2 border-accent group-hover:scale-105 transition-transform duration-300">
+                            <img src="assets/img/logo.jpg" alt="Logo Ocheto" class="h-full w-full object-cover">
+                        </div>
+                        <div class="font-heading text-xl md:text-2xl font-bold text-accent">OCHETO COFFEE</div>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation with Dropdowns -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <!-- Inicio -->
+                    <a href="index.html"
+                        class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Inicio
+                    </a>
+
+                    <!-- Productos -->
+                    <a href="productos.html"
+                        class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Productos
+                    </a>
+
+                    <!-- Marco Teórico Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="marcoTeorico.html"
+                            class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Marco Teórico
+                            <i
+                                class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- Dropdown Menu -->
+                        <div
+                            class="dropdown-menu absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Introducción -->
+                            <a href="marcoTeorico.html"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Introducción</div>
+                                </div>
+                            </a>
+
+                            <!-- Antecedentes -->
+                            <a href="marcoTeorico.html#antecedentes"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Antecedentes</div>
+                                </div>
+                            </a>
+
+                            <!-- Planteamiento del Problema -->
+                            <a href="marcoTeorico.html#planificacion"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Planteamiento del Problema</div>
+                                </div>
+                            </a>
+
+                            <!-- Árbol de Problemas -->
+                            <a href="marcoTeorico.html#arbol-problemas"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Árbol de Problemas</div>
+                                </div>
+                            </a>
+
+                            <!-- Formulación del Problema -->
+                            <a href="marcoTeorico.html#formulacion"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Formulación del Problema</div>
+                                </div>
+                            </a>
+
+                            <!-- Propósito del Estudio -->
+                            <a href="marcoTeorico.html#proposito"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Propósito del Estudio</div>
+                                </div>
+                            </a>
+
+                            <!-- Metodología de Investigación -->
+                            <a href="marcoTeorico.html#metodologia"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Metodología de Investigación</div>
+                                </div>
+                            </a>
+
+                            <!-- Planificación de Actividades -->
+                            <a href="marcoTeorico.html#planificacion-actividades"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Planificación de Actividades</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Análisis Estructurado Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="analisisEstructurado.html"
+                            class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Análisis Estructurado
+                            <i
+                                class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- Dropdown Menu with Submenu -->
+                        <div
+                            class="dropdown-menu absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Modelo Ambiental with Submenu -->
+                            <div class="dropdown-submenu-trigger relative">
+                                <a href="analisisEstructurado.html#modelo-ambiental"
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Modelo Ambiental</div>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-xs ml-2"></i>
+                                </a>
+                            </div>
+
+                            <!-- Modelo de Comportamiento with Submenu -->
+                            <div class="dropdown-submenu-trigger relative">
+                                <a href="analisisEstructurado.html#modelo-comportamiento"
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Modelo de Comportamiento</div>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-xs ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orientado a Objetos Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="orientadoObjetos.html"
+                            class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Orientado a Objetos
+                            <i
+                                class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- Dropdown Menu -->
+                        <div
+                            class="dropdown-menu absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Diagrama de Clases -->
+                            <a href="orientadoObjetos.html#clases"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Diagrama de Clases</div>
+                                </div>
+                            </a>
+
+                            <!-- Diagrama de Casos de Uso -->
+                            <a href="orientadoObjetos.html#casos-uso"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Diagrama de Casos de Uso</div>
+                                </div>
+                            </a>
+
+                            <!-- Casos de Uso (Texto) -->
+                            <a href="orientadoObjetos.html#tipo-texto"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Casos de Uso (Texto)</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Video (activo) -->
+                    <a href="video.html"
+                        class="relative px-4 py-2 font-medium text-primary transition-colors duration-300 flex items-center">
+                        Video
+                    </a>
+
+                    <!-- Contacto -->
+                    <a href="contacto.html"
+                        class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Contacto
+                    </a>
+                </nav>
+
+                <!-- Search and User Actions -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <!-- Search Button -->
+                    <div class="relative">
+                        <button @click="searchOpen = !searchOpen"
+                            class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300">
+                            <i class="fas fa-search text-gray-700"></i>
+                        </button>
+
+                        <!-- Search Box -->
+                        <div class="search-box absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-xl p-4 z-50"
+                            :class="{ 'open': searchOpen }">
+                            <div class="flex items-center">
+                                <input type="text" placeholder="Buscar productos, información..."
+                                    class="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <button
+                                    class="px-4 py-2 bg-primary text-white rounded-r-lg hover:bg-accent transition-colors">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-500">
+                                <p>Busca entre nuestros productos y documentación del proyecto.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="dropdown relative">
+                        <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300">
+                            <i class="fas fa-user text-gray-700"></i>
+                        </button>
+
+                        <!-- User Dropdown Menu -->
+                        <div
+                            class="dropdown-menu absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <a href="#"
+                                class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                            </a>
+                            <a href="#"
+                                class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-user-plus mr-2"></i> Registrarse
+                            </a>
+                            <div class="border-t my-2"></div>
+                            <a href="contacto.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-question-circle mr-2"></i> Ayuda
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen"
+                    class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu with Dropdowns -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-2"
+            class="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="container mx-auto px-4 py-6">
+                <!-- Search in Mobile -->
+                <div class="mb-6">
+                    <div class="flex items-center bg-gray-100 rounded-lg p-2">
+                        <i class="fas fa-search text-gray-500 mx-2"></i>
+                        <input type="text" placeholder="Buscar..." class="flex-1 bg-transparent outline-none">
+                        <button class="ml-2 px-3 py-1 bg-primary text-white rounded-md text-sm">Buscar</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Items -->
+                <div class="space-y-2">
+                    <a href="index.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Inicio</div>
+                        <i class="fas fa-home text-gray-400"></i>
+                    </a>
+
+                    <a href="productos.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Productos</div>
+                        <i class="fas fa-coffee text-gray-400"></i>
+                    </a>
+
+                    <!-- Marco Teórico Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open"
+                            class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Marco Teórico</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"
+                                :class="{ 'rotate-180': open }"></i>
+                        </button>
+
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <a href="marcoTeorico.html" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Introducción</div>
+                            </a>
+                            <a href="marcoTeorico.html#antecedentes"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Antecedentes</div>
+                            </a>
+                            <a href="marcoTeorico.html#planificacion"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Planteamiento del Problema</div>
+                            </a>
+                            <a href="marcoTeorico.html#arbol-problemas"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Árbol de Problemas</div>
+                            </a>
+                            <a href="marcoTeorico.html#formulacion" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Formulación del Problema</div>
+                            </a>
+                            <a href="marcoTeorico.html#proposito" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Propósito del Estudio</div>
+                            </a>
+                            <a href="marcoTeorico.html#metodologia" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Metodología</div>
+                            </a>
+                            <a href="marcoTeorico.html#planificacion-actividades"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Planificación de Actividades</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Análisis Estructurado Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open"
+                            class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Análisis Estructurado</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"
+                                :class="{ 'rotate-180': open }"></i>
+                        </button>
+
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <a href="analisisEstructurado.html#modelo-ambiental" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Modelo Ambiental</div>
+                            </a>
+                            <a href="analisisEstructurado.html#modelo-comportamiento" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Modelo de Comportamiento</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Orientado a Objetos Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open"
+                            class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Orientado a Objetos</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"
+                                :class="{ 'rotate-180': open }"></i>
+                        </button>
+
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <a href="orientadoObjetos.html" class="block py-2 text-gray-600 hover:text-primary">Diagrama
+                                de Clases</a>
+                            <a href="orientadoObjetos.html#casos-uso"
+                                class="block py-2 text-gray-600 hover:text-primary">Diagrama de Casos de Uso</a>
+                            <a href="orientadoObjetos.html#tipo-texto"
+                                class="block py-2 text-gray-600 hover:text-primary">Casos de Uso (Texto)</a>
+                        </div>
+                    </div>
+
+                    <a href="video.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg bg-primary/10 text-primary transition-colors">
+                        <div class="font-medium">Video</div>
+                        <i class="fas fa-video text-primary"></i>
+                    </a>
+
+                    <a href="contacto.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Contacto</div>
+                        <i class="fas fa-address-book text-gray-400"></i>
+                    </a>
+                </div>
+
+                <!-- User Actions in Mobile -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="flex-1 text-center py-2 bg-primary text-white rounded-lg hover:bg-accent transition-colors">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                        </a>
+                        <a href="#"
+                            class="flex-1 text-center py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                            <i class="fas fa-user-plus mr-2"></i> Registrarse
                         </a>
                     </div>
-                    <div class="logo-text">OCHETO COFFEE</div>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li class="tooltip1"><a href="marcoTeorico.html">Marco Teorico</a>
-                        <span class="tooltip-cont">*Marco teorico*</span>
-                    </li>
-                    <li class="tooltip1"><a href="analisisEstructurado.html">Analisis Estructurado</a>
-                        <span class="tooltip-cont">*Analisis Estructurado*</span>
-                    </li>
-                    <li class="tooltip1"><a href="orientadoObjetos.html">Orientado a objetos</a>
-                        <span class="tooltip-cont">*orientado a objetos*</span>
-                    </li>
-                    <li class="tooltip1"><a href="video.html">Video</a>
-                        <span class="tooltip-cont">*video*</span>
-                    </li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
     </header>
-
-    <!-- Sección de Contacto -->
-    <section class="contact-section">
-        <div class="container">
-            <div class="contact-container">
-                <!-- Información de contacto -->
-                <div class="contact-info">
-                    <div class="contact-form">
-                        <h2
-                            style="font-family: var(--font-heading); color: var(--color-accent); margin-bottom: 1.5rem;">
-                            Integrantes</h3>
-                            <form>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div
-                                            style="border: 1px solid #ccc; padding: 8px; border-radius: 4px; background-color: #f8f9fa; margin-bottom: 12px;">
-                                            - Chipana Romero Laura Karolina
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div
-                                            style="border: 1px solid #ccc; padding: 8px; border-radius: 4px; background-color: #f8f9fa; margin-bottom: 12px;">
-                                            - Mamani Condori Yerko Javier
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div
-                                            style="border: 1px solid #ccc; padding: 8px; border-radius: 4px; background-color: #f8f9fa; margin-bottom: 12px;">
-                                            - Pinto Mamani Tania
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div
-                                            style="border: 1px solid #ccc; padding: 8px; border-radius: 4px; background-color: #f8f9fa; margin-bottom: 12px;">
-                                            - Valencia Ticona Daniel Jose
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div
-                                            style="border: 1px solid #ccc; padding: 8px; border-radius: 4px; background-color: #f8f9fa; margin-bottom: 12px;">
-                                            - Zamora Rivas Mauricio Marco
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                    </div>
-
-                    <div class="section-title">
-                        <h1>Contáctenos</h1>
-                        <p>En OCHETO COFFEE, nos esforzamos día a día por brindarte la mejor experiencia en cada visita.
-                            Si tienes alguna consulta o necesitas asistencia, no dudes en contactarnos. Nuestro equipo
-                            está listo para ayudarte con cualquier duda o recomendación sobre nuestros productos y
-                            servicios.</p>
-                    </div>
-
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div class="contact-text">
-                                <h3>Dirección</h3>
-                                <p>C. Oruro entre C. Murillo y Mariscal Santa Cruz<br>Av. Illampu cerca a la Esq. Santa
-                                    Cruz Hotel Sajama.<br>La Paz, Bolivia</p>
-                            </div>
-                        </div>
-
-                        <div class="contact-item">
-                            <div class="contact-icon">📞</div>
-                            <div class="contact-text">
-                                <h3>Teléfono</h3>
-                                <p>+591 78823697</p>
-                            </div>
-                        </div>
-
-                        <div class="contact-item">
-                            <div class="contact-icon">✉️</div>
-                            <div class="contact-text">
-                                <h3>Correo Electrónico</h3>
-                                <p>angelo_17jm@hotmail.com</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="hours-info">
-                        <h3>Horarios de Atención</h3>
-                        <ul class="hours-list">
-                            <li><span>Lunes - Viernes:</span> <span>7:00 AM - 8:00 PM</span></li>
-                            <li><span>Sábados:</span> <span>8:00 AM - 6:00 PM</span></li>
-                            <li><span>Domingos:</span> <span>9:00 AM - 4:00 PM</span></li>
-                        </ul>
-                    </div> -->
+    
+    <!-- Sección de Contacto Principal -->
+    <main class="pt-24 md:pt-32 pb-16">
+        <div class="container mx-auto px-4 md:px-6 lg:px-8">
+            
+            <!-- Encabezado de la sección -->
+            <div class="text-center mb-16" data-animation="fade-up">
+                <div class="inline-flex items-center justify-center mb-6">
+                    <div class="w-16 h-0.5 bg-primary/30 mr-4"></div>
+                    <span class="text-sm font-medium text-primary tracking-widest uppercase">Contáctanos</span>
+                    <div class="w-16 h-0.5 bg-primary/30 ml-4"></div>
                 </div>
-
-                <!-- Formulario de contacto -->
-                <div class="contact-form">
-                    <h2 style="font-family: var(--font-heading); color: var(--color-accent); margin-bottom: 1.5rem;">
-                        Envíanos un mensaje</h2>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Nombre completo</label>
-                            <input type="text" id="name" class="form-control" required>
+                
+                <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-accent mb-6 leading-tight">
+                    Estamos aquí para <span class="text-primary">ayudarte</span>
+                </h1>
+                
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    En OCHETO COFFEE, nos esforzamos día a día por brindarte la mejor experiencia. 
+                    Si tienes alguna consulta o necesitas asistencia, nuestro equipo está listo para ayudarte.
+                </p>
+            </div>
+            
+            <!-- Grid de información y formulario -->
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
+                
+                <!-- Columna izquierda: Información de contacto -->
+                <div class="space-y-8" data-animation="slide-left">
+                    
+                    <!-- Tarjeta de contacto de analistas -->
+                    <div class="contact-card rounded-3xl p-8 shadow-lg">
+                        <h2 class="font-heading text-2xl font-bold text-accent mb-6">
+                            <i class="fas fa-users text-primary mr-3"></i>
+                            Contacto Analistas y Diseñadores
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl border border-primary/10">
+                                <i class="fas fa-envelope text-primary mr-4"></i>
+                                <span class="font-medium text-accent">dvalenciat@fcpn.edu.bo</span>
+                            </div>
+                            
+                            <div class="flex items-center p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl border border-primary/10">
+                                <i class="fas fa-envelope text-primary mr-4"></i>
+                                <span class="font-medium text-accent">djvalencia3@umsa.bo</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Correo electrónico</label>
-                            <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <!-- Información detallada de contacto -->
+                    <div class="space-y-8">
+                        <!-- Dirección -->
+                        <div class="contact-item group">
+                            <div class="flex items-start">
+                                <div class="contact-icon-wrapper rounded-2xl flex items-center justify-center mr-6">
+                                    <i class="fas fa-map-marker-alt text-2xl text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-heading text-xl font-bold text-accent mb-2">Dirección</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        C. Oruro entre C. Murillo y Mariscal Santa Cruz<br>
+                                        Av. Illampu cerca a la Esq. Santa Cruz Hotel Sajama.<br>
+                                        La Paz, Bolivia
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="subject">Asunto</label>
-                            <input type="text" id="subject" class="form-control" required>
+                        
+                        <!-- Teléfono -->
+                        <div class="contact-item group">
+                            <div class="flex items-start">
+                                <div class="contact-icon-wrapper rounded-2xl flex items-center justify-center mr-6">
+                                    <i class="fas fa-phone text-2xl text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-heading text-xl font-bold text-accent mb-2">Teléfono</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        +591 78823697
+                                    </p>
+                                    <p class="text-sm text-gray-500 mt-1">Línea directa</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="message">Mensaje</label>
-                            <textarea id="message" class="form-control" required></textarea>
+                        
+                        <!-- Correo Electrónico -->
+                        <div class="contact-item group">
+                            <div class="flex items-start">
+                                <div class="contact-icon-wrapper rounded-2xl flex items-center justify-center mr-6">
+                                    <i class="fas fa-envelope text-2xl text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-heading text-xl font-bold text-accent mb-2">Correo Electrónico</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        angelo_17jm@hotmail.com
+                                    </p>
+                                    <p class="text-sm text-gray-500 mt-1">Respondemos en 24h</p>
+                                </div>
+                            </div>
                         </div>
-                        <button type="submit" class="submit-btn">Enviar mensaje</button>
+                    </div>
+                    
+                    <!-- Información adicional -->
+                    <div class="mt-8 p-6 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl border border-primary/10">
+                        <h4 class="font-heading text-lg font-bold text-accent mb-4">¿Por qué contactarnos?</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-primary mr-3"></i>
+                                <span class="text-gray-600">Consultas sobre nuestros productos</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-primary mr-3"></i>
+                                <span class="text-gray-600">Reservas y eventos especiales</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-primary mr-3"></i>
+                                <span class="text-gray-600">Feedback y sugerencias</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-primary mr-3"></i>
+                                <span class="text-gray-600">Oportunidades laborales</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                
+                <!-- Columna derecha: Formulario de contacto -->
+                <div class="contact-card rounded-3xl p-8 shadow-lg" data-animation="slide-right">
+                    <h2 class="font-heading text-2xl font-bold text-accent mb-6">
+                        <i class="fas fa-paper-plane text-primary mr-3"></i>
+                        Envíanos un mensaje
+                    </h2>
+                    
+                    <form id="contactForm" @submit.prevent="submitForm" class="space-y-6">
+                        <!-- Nombre completo -->
+                        <div class="form-group">
+                            <label for="name" class="block text-sm font-medium text-accent mb-2">
+                                Nombre completo
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-gray-400"></i>
+                                </div>
+                                <input type="text" 
+                                       id="name" 
+                                       x-model="formData.name"
+                                       required
+                                       class="form-input w-full pl-10 pr-4 py-3 rounded-xl bg-white/50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                                       placeholder="Tu nombre completo">
+                            </div>
+                        </div>
+                        
+                        <!-- Correo electrónico -->
+                        <div class="form-group">
+                            <label for="email" class="block text-sm font-medium text-accent mb-2">
+                                Correo electrónico
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-gray-400"></i>
+                                </div>
+                                <input type="email" 
+                                       id="email" 
+                                       x-model="formData.email"
+                                       required
+                                       class="form-input w-full pl-10 pr-4 py-3 rounded-xl bg-white/50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                                       placeholder="tu@email.com">
+                            </div>
+                        </div>
+                        
+                        <!-- Asunto -->
+                        <div class="form-group">
+                            <label for="subject" class="block text-sm font-medium text-accent mb-2">
+                                Asunto
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-tag text-gray-400"></i>
+                                </div>
+                                <input type="text" 
+                                       id="subject" 
+                                       x-model="formData.subject"
+                                       required
+                                       class="form-input w-full pl-10 pr-4 py-3 rounded-xl bg-white/50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                                       placeholder="¿En qué podemos ayudarte?">
+                            </div>
+                        </div>
+                        
+                        <!-- Mensaje -->
+                        <div class="form-group">
+                            <label for="message" class="block text-sm font-medium text-accent mb-2">
+                                Mensaje
+                            </label>
+                            <div class="relative">
+                                <div class="absolute top-3 left-3">
+                                    <i class="fas fa-comment text-gray-400"></i>
+                                </div>
+                                <textarea id="message" 
+                                          x-model="formData.message"
+                                          required
+                                          rows="6"
+                                          class="form-input w-full pl-10 pr-4 py-3 rounded-xl bg-white/50 border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 resize-none"
+                                          placeholder="Escribe tu mensaje aquí..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Botón de envío -->
+                        <button type="submit" 
+                                :disabled="isSubmitting"
+                                class="submit-btn w-full py-4 px-6 rounded-xl text-white font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            
+                            <template x-if="!isSubmitting">
+                                <span class="flex items-center justify-center">
+                                    <i class="fas fa-paper-plane mr-3"></i>
+                                    Enviar mensaje
+                                </span>
+                            </template>
+                            
+                            <template x-if="isSubmitting">
+                                <span class="flex items-center justify-center">
+                                    <svg class="animate-spin h-5 w-5 text-white mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Enviando...
+                                </span>
+                            </template>
+                        </button>
+                        
+                        <!-- Mensaje de confirmación -->
+                        <div x-show="showSuccessMessage" 
+                             x-transition:enter="transition ease-out duration-300"
+                             x-transition:enter-start="opacity-0 transform scale-95"
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             x-transition:leave="transition ease-in duration-200"
+                             x-transition:leave-start="opacity-100 transform scale-100"
+                             x-transition:leave-end="opacity-0 transform scale-95"
+                             class="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3 text-xl"></i>
+                                <div>
+                                    <h4 class="font-medium text-green-800">¡Mensaje enviado!</h4>
+                                    <p class="text-sm text-green-600 mt-1">Gracias por contactarnos. Te responderemos pronto.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Política de privacidad -->
+                        <div class="text-center mt-6">
+                            <p class="text-xs text-gray-500">
+                                Al enviar este formulario, aceptas nuestra 
+                                <a href="#" class="text-primary hover:text-accent transition-colors duration-300">política de privacidad</a>.
+                            </p>
+                        </div>
                     </form>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contacto">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>OCHETO COFFEE</h3>
-                    <p>La mejor experiencia cafetera en un ambiente elegante y acogedor.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Horarios</h3>
-                    <ul>
-                        <li>Lunes a Viernes: 7:00 - 20:00</li>
-                        <li>Sábados: 8:00 - 18:00</li>
-                        <li>Domingos: 9:00 - 16:00</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li>Teléfono: 78823697</li>
-                        <li>Email: angelo_17jm@hotmail.com</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Síguenos</h3>
-                    <ul>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Dirección</h3>
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.38414258601!2d-68.13554243390426!3d-16.49898739394061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f21001b5174c5%3A0x824aeeaf8c636ce1!2sOcheto%20Coffee!5e0!3m2!1ses-419!2sus!4v1762118633585!5m2!1ses-419!2sus"
-                        width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                    <p>C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel
-                        Sajama., La
-                        Paz, Bolivia</p>
+            
+            <!-- Mapa de ubicación -->
+            <div class="mt-20" data-animation="fade-up">
+                <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100">
+                    <div class="p-8">
+                        <h3 class="font-heading text-2xl font-bold text-accent mb-6 text-center">
+                            <i class="fas fa-map-marked-alt text-primary mr-3"></i>
+                            Nuestra Ubicación
+                        </h3>
+                        
+                        <div class="relative rounded-2xl overflow-hidden">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.38414258601!2d-68.13554243390426!3d-16.49898739394061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f21001b5174c5%3A0x824aeeaf8c636ce1!2sOcheto%20Coffee!5e0!3m2!1ses-419!2sus!4v1762118633585!5m2!1ses-419!2sus"
+                                width="100%" 
+                                height="400" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                class="rounded-lg">
+                            </iframe>
+                            
+                            <!-- Overlay informativo -->
+                            <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3 shadow-lg border border-white/20">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-map-pin text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-accent">Ocheto Coffee - Sucursal Central</p>
+                                        <p class="text-xs text-gray-600">C. Oruro entre C. Murillo y Mariscal Santa Cruz</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+            
+            <!-- Información de contacto adicional -->
+            <div class="mt-16 grid md:grid-cols-3 gap-8" data-animation="fade-up">
+                <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-2xl text-primary"></i>
+                    </div>
+                    <h4 class="font-heading text-lg font-bold text-accent mb-2">Horarios de Atención</h4>
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <div class="flex justify-between">
+                            <span>Lunes - Viernes:</span>
+                            <span class="font-medium text-accent">7:00 - 20:00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Sábados:</span>
+                            <span class="font-medium text-accent">8:00 - 18:00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Domingos:</span>
+                            <span class="font-medium text-accent">9:00 - 16:00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headset text-2xl text-primary"></i>
+                    </div>
+                    <h4 class="font-heading text-lg font-bold text-accent mb-2">Soporte Rápido</h4>
+                    <p class="text-sm text-gray-600 mb-3">Respuesta en menos de 24 horas</p>
+                    <a href="tel:+59178823697" class="inline-flex items-center text-primary hover:text-accent transition-colors duration-300">
+                        <i class="fas fa-phone mr-2"></i>
+                        <span class="font-medium">Llámanos ahora</span>
+                    </a>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-comments text-2xl text-primary"></i>
+                    </div>
+                    <h4 class="font-heading text-lg font-bold text-accent mb-2">Redes Sociales</h4>
+                    <p class="text-sm text-gray-600 mb-3">Síguenos para actualizaciones</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    
+    <!-- FOOTER COPIADO DESDE INDEX.HTML -->
+         <footer class="bg-accent text-white pt-16 pb-10" id="contacto">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Grid de información -->
+                <div class="grid md:grid-cols-4 gap-8 lg:gap-12 mb-12">
+                    <!-- Logo y descripción (col-span-2 en desktop) -->
+                    <div class="md:col-span-2">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-secondary">
+                                <img src="assets/img/logo.jpg" alt="Logo Ocheto" class="h-full w-full object-cover">
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-heading text-2xl font-bold">OCHETO</span>
+                                <span class="text-sm text-secondary font-medium">COFFEE</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 max-w-md mb-6 text-sm">
+                            Un espacio minimalista dedicado al café de calidad. Donde cada detalle importa.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#"
+                                class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-instagram text-white"></i>
+                            </a>
+                            <a href="#"
+                                class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-facebook-f text-white"></i>
+                            </a>
+                            <a href="#"
+                                class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-twitter text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Horarios -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold mb-6 pb-3 border-b border-secondary inline-block">
+                            Horarios</h3>
+                        <ul class="space-y-4 text-gray-300 text-sm">
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Lun - Vie:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">7:00 - 20:00</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Sábados:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">8:00 - 18:00</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Domingos:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">9:00 - 16:00</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contacto -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold mb-6 pb-3 border-b border-secondary inline-block">
+                            Contacto</h3>
+                        <ul class="space-y-4 text-gray-300 text-sm">
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Teléfono</span>
+                                    <span>78823697</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Email</span>
+                                    <span>angelo_17jm@hotmail.com</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Ubicación</span>
+                                    <span class="text-xs">La Paz, Bolivia</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Mapa -->
+                <div class="mb-12 rounded-xl overflow-hidden shadow-2xl">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.38414258601!2d-68.13554243390426!3d-16.49898739394061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f21001b5174c5%3A0x824aeeaf8c636ce1!2sOcheto%20Coffee!5e0!3m2!1ses-419!2sus!4v1762118633585!5m2!1ses-419!2sus"
+                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" class="rounded-lg">
+                    </iframe>
+                </div>
+
+                <!-- Dirección detallada -->
+                <div class="mb-8 text-center">
+                    <p class="text-sm text-gray-300 max-w-2xl mx-auto">
+                        <i class="fas fa-map-pin text-secondary mr-2"></i>
+                        C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel
+                        Sajama., La Paz, Bolivia
+                    </p>
+                </div>
+
+                <!-- Copyright y Enlaces -->
+                <div class="pt-8 border-t border-gray-700">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-4 md:mb-0 text-gray-400 text-sm">
+                            <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+                        </div>
+                        <div class="flex space-x-6 text-sm">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Política
+                                de Privacidad</a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Términos
+                                de Servicio</a>
+                            <a href="contacto.html"
+                                class="text-secondary hover:text-white transition-colors duration-300">Contacto</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
-
+    
+    <!-- JavaScript para funcionalidades de contacto -->
     <script>
-        // Efecto de header al hacer scroll
-        window.addEventListener('scroll', function () {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
+        // Configuración de Tailwind
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#A8714A',
+                        'secondary': '#E8D0B3',
+                        'accent': '#4A3520',
+                        'light': '#FAF7F2',
+                        'dark': '#2A2118',
+                    }
+                }
             }
-        });
-
-        // Smooth scroll para enlaces internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
+        }
+        
+        // Aplicación de contacto con Alpine.js
+        function contactApp() {
+            return {
+                formData: {
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: ''
+                },
+                isSubmitting: false,
+                showSuccessMessage: false,
+                
+                init() {
+                    console.log('Aplicación de contacto inicializada');
+                    
+                    // Inicializar animaciones al cargar
+                    this.initAnimations();
+                },
+                
+                initAnimations() {
+                    // Animaciones al hacer scroll
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const animation = entry.target.getAttribute('data-animation');
+                                if (animation) {
+                                    entry.target.classList.add(`animate-${animation}`);
+                                }
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
                     });
+                    
+                    // Observar elementos con data-animation
+                    document.querySelectorAll('[data-animation]').forEach(el => {
+                        observer.observe(el);
+                    });
+                },
+                
+                submitForm() {
+                    // Validación básica
+                    if (!this.formData.name || !this.formData.email || !this.formData.message) {
+                        alert('Por favor, completa todos los campos requeridos.');
+                        return;
+                    }
+                    
+                    // Simular envío del formulario
+                    this.isSubmitting = true;
+                    
+                    // Simular tiempo de procesamiento
+                    setTimeout(() => {
+                        this.isSubmitting = false;
+                        this.showSuccessMessage = true;
+                        
+                        // Resetear formulario
+                        this.formData = {
+                            name: '',
+                            email: '',
+                            subject: '',
+                            message: ''
+                        };
+                        
+                        // Ocultar mensaje de éxito después de 5 segundos
+                        setTimeout(() => {
+                            this.showSuccessMessage = false;
+                        }, 5000);
+                        
+                        // Scroll suave al formulario
+                        document.getElementById('contactForm').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        
+                    }, 2000);
+                }
+            }
+        }
+        
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Efecto de carga de imágenes
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.classList.add('loaded');
+                });
+                
+                // Si la imagen ya está cargada
+                if (img.complete) {
+                    img.classList.add('loaded');
                 }
             });
-        });
-
-        // Manejo del formulario de contacto
-        document.getElementById('contactForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // Aquí iría la lógica para enviar el formulario
-            alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
-            this.reset();
+            
+            // Validación de email en tiempo real
+            const emailInput = document.getElementById('email');
+            if (emailInput) {
+                emailInput.addEventListener('blur', function() {
+                    const email = this.value;
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    
+                    if (email && !emailRegex.test(email)) {
+                        this.classList.add('border-red-500');
+                        this.classList.remove('border-gray-200');
+                    } else {
+                        this.classList.remove('border-red-500');
+                        this.classList.add('border-gray-200');
+                    }
+                });
+            }
         });
     </script>
 </body>
-
 </html>

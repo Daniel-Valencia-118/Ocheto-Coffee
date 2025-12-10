@@ -1,221 +1,1272 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="es" x-data="app()" x-cloak>
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>OCHETO - Blog y Sistema de Ventas</title>
-    <meta name="description" content="Sistema de ventas para la Cafetería OCHETO. Productos, análisis y diagramas." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería OCHETO - Análisis Estructurado</title>
+    <meta name="description" content="Análisis estructurado del sistema de gestión para la Cafetería OCHETO. Modelos ambientales, comportamiento y diagramas de flujo de datos.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/analisis.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- Tailwind CSS PRODUCTION VERSION -->
+    <script src="https://cdn.tailwindcss.com/3.4.1?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+    <!-- Alpine.js con Collapse Plugin -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS (mismo que index.html) -->
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+        :root {
+            --color-primary: #8B4513;
+            --color-secondary: #D4A76A;
+            --color-accent: #5D4037;
+            --color-light: #F5F5F5;
+            --color-dark: #2C2C2C;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        .font-heading {
+            font-family: var(--font-heading);
+        }
+
+        .font-body {
+            font-family: var(--font-body);
+        }
+
+        .text-primary {
+            color: var(--color-primary);
+        }
+
+        .text-secondary {
+            color: var(--color-secondary);
+        }
+
+        .text-accent {
+            color: var(--color-accent);
+        }
+
+        .bg-primary {
+            background-color: var(--color-primary);
+        }
+
+        .bg-secondary {
+            background-color: var(--color-secondary);
+        }
+
+        .bg-accent {
+            background-color: var(--color-accent);
+        }
+
+        .bg-light {
+            background-color: var(--color-light);
+        }
+
+        /* Custom animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Dropdown menu styles */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-secondary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+
+        /* Glass effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Content tooltip styles */
+        .content-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            border-bottom: 1px dotted var(--color-primary);
+        }
+
+        .content-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 280px;
+            background-color: var(--color-accent);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 12px;
+            position: absolute;
+            z-index: 100;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -140px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--color-accent) transparent transparent transparent;
+        }
+
+        .content-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Image hover effects */
+        .content-image {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 0.5rem;
+        }
+
+        .content-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Anchor link smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Section spacing */
+        section {
+            scroll-margin-top: 6rem;
+        }
+
+        /* Blockquote styling */
+        .custom-blockquote {
+            border-left: 4px solid var(--color-primary);
+            background: linear-gradient(135deg, #f5f5f5 0%, #f9f9f9 100%);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        /* Code block styling */
+        .code-block {
+            font-family: 'Courier New', monospace;
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+    </style>
 </head>
 
-<body>
-    <header id="header">
-        <div class="menu-container">
-            <nav class="nav-container">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <a href="index.html">
-                            <img src="assets/img/logo.jpg" style="height: 60px; width: 60px; border-radius: 50%;">
+<body class="font-body text-gray-800 bg-light">
+    <!-- Header y Navegación - Mismo que index.html -->
+    <header id="header" x-data="{ 
+                scrolled: false, 
+                mobileMenuOpen: false,
+                searchOpen: false,
+                activeDropdown: null
+            }" @scroll.window="scrolled = window.scrollY > 50"
+        :class="scrolled ? 'py-3 shadow-lg bg-white/95 backdrop-blur-sm' : 'py-4 bg-white/90'"
+        class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3 group">
+                        <div
+                            class="h-12 w-12 md:h-14 md:w-14 rounded-full overflow-hidden border-2 border-accent group-hover:scale-105 transition-transform duration-300">
+                            <img src="assets/img/logo.jpg" alt="Logo Ocheto" class="h-full w-full object-cover">
+                        </div>
+                        <div class="font-heading text-xl md:text-2xl font-bold text-accent">OCHETO COFFEE</div>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation with Dropdowns -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <!-- Inicio -->
+                    <a href="index.html"
+                        class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Inicio
+                    </a>
+
+                    <!-- Productos -->
+                    <a href="productos.html"
+                        class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Productos
+                    </a>
+
+                    <!-- Marco Teórico Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="marcoTeorico.html"
+                            class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Marco Teórico
+                            <i
+                                class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- Dropdown Menu -->
+                        <div
+                            class="dropdown-menu absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Introducción -->
+                            <a href="marcoTeorico.html"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Introducción</div>
+                                </div>
+                            </a>
+
+                            <!-- Antecedentes -->
+                            <a href="marcoTeorico.html#antecedentes"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Antecedentes</div>
+                                </div>
+                            </a>
+
+                            <!-- Planteamiento del Problema -->
+                            <a href="marcoTeorico.html#planificacion"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Planteamiento del Problema</div>
+                                </div>
+                            </a>
+
+                            <!-- Árbol de Problemas -->
+                            <a href="marcoTeorico.html#arbol-problemas"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Árbol de Problemas</div>
+                                </div>
+                            </a>
+
+                            <!-- Formulación del Problema -->
+                            <a href="marcoTeorico.html#formulacion"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Formulación del Problema</div>
+                                </div>
+                            </a>
+
+                            <!-- Propósito del Estudio -->
+                            <a href="marcoTeorico.html#proposito"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Propósito del Estudio</div>
+                                </div>
+                            </a>
+
+                            <!-- Metodología de Investigación -->
+                            <a href="marcoTeorico.html#metodologia"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Metodología de Investigación</div>
+                                </div>
+                            </a>
+
+                            <!-- Planificación de Actividades -->
+                            <a href="marcoTeorico.html#planificacion-actividades"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Planificación de Actividades</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Análisis Estructurado Dropdown (activo) -->
+                    <div class="dropdown relative">
+                        <a href="analisisEstructurado.html"
+                            class="relative px-4 py-2 font-medium text-primary transition-colors duration-300 flex items-center group">
+                            Análisis Estructurado
+                            <i
+                                class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- Dropdown Menu with Submenu -->
+                        <div
+                            class="dropdown-menu absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Modelo Ambiental with Submenu -->
+                            <div class="dropdown-submenu-trigger relative">
+                                <a href="#modelo-ambiental"
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Modelo Ambiental</div>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-xs ml-2"></i>
+                                </a>
+                            </div>
+
+                            <!-- Modelo de Comportamiento with Submenu -->
+                            <div class="dropdown-submenu-trigger relative">
+                                <a href="#modelo-comportamiento"
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Modelo de Comportamiento</div>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-xs ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orientado a Objetos Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="orientadoObjetos.html"
+                            class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Orientado a Objetos
+                            <i
+                                class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- Dropdown Menu -->
+                        <div
+                            class="dropdown-menu absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Diagrama de Clases -->
+                            <a href="orientadoObjetos.html"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Diagrama de Clases</div>
+                                </div>
+                            </a>
+
+                            <!-- Diagrama de Casos de Uso -->
+                            <a href="orientadoObjetos.html#casos-uso"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Diagrama de Casos de Uso</div>
+                                </div>
+                            </a>
+
+                            <!-- Casos de Uso (Texto) -->
+                            <a href="orientadoObjetos.html#tipo-texto"
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Casos de Uso (Texto)</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Video -->
+                    <a href="video.html"
+                        class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Video
+                    </a>
+
+                    <!-- Contacto -->
+                    <a href="contacto.html"
+                        class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Contacto
+                    </a>
+                </nav>
+
+                <!-- Search and User Actions -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <!-- Search Button -->
+                    <div class="relative">
+                        <button @click="searchOpen = !searchOpen"
+                            class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300">
+                            <i class="fas fa-search text-gray-700"></i>
+                        </button>
+
+                        <!-- Search Box -->
+                        <div class="search-box absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-xl p-4 z-50"
+                            :class="{ 'open': searchOpen }">
+                            <div class="flex items-center">
+                                <input type="text" placeholder="Buscar productos, información..."
+                                    class="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <button
+                                    class="px-4 py-2 bg-primary text-white rounded-r-lg hover:bg-accent transition-colors">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-500">
+                                <p>Busca entre nuestros productos y documentación del proyecto.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="dropdown relative">
+                        <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300">
+                            <i class="fas fa-user text-gray-700"></i>
+                        </button>
+
+                        <!-- User Dropdown Menu -->
+                        <div
+                            class="dropdown-menu absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <a href="#"
+                                class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                            </a>
+                            <a href="#"
+                                class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-user-plus mr-2"></i> Registrarse
+                            </a>
+                            <div class="border-t my-2"></div>
+                            <a href="contacto.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-question-circle mr-2"></i> Ayuda
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen"
+                    class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu with Dropdowns -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-2"
+            class="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="container mx-auto px-4 py-6">
+                <!-- Search in Mobile -->
+                <div class="mb-6">
+                    <div class="flex items-center bg-gray-100 rounded-lg p-2">
+                        <i class="fas fa-search text-gray-500 mx-2"></i>
+                        <input type="text" placeholder="Buscar..." class="flex-1 bg-transparent outline-none">
+                        <button class="ml-2 px-3 py-1 bg-primary text-white rounded-md text-sm">Buscar</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Items -->
+                <div class="space-y-2">
+                    <a href="index.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Inicio</div>
+                        <i class="fas fa-home text-gray-400"></i>
+                    </a>
+
+                    <a href="productos.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Productos</div>
+                        <i class="fas fa-coffee text-gray-400"></i>
+                    </a>
+
+                    <!-- Marco Teórico Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open"
+                            class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Marco Teórico</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"
+                                :class="{ 'rotate-180': open }"></i>
+                        </button>
+
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <a href="marcoTeorico.html" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Introducción</div>
+                            </a>
+                            <a href="marcoTeorico.html#antecedentes"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Antecedentes</div>
+                            </a>
+                            <a href="marcoTeorico.html#planificacion"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Planteamiento del Problema</div>
+                            </a>
+                            <a href="marcoTeorico.html#arbol-problemas"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Árbol de Problemas</div>
+                            </a>
+                            <a href="marcoTeorico.html#formulacion" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Formulación del Problema</div>
+                            </a>
+                            <a href="marcoTeorico.html#proposito" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Propósito del Estudio</div>
+                            </a>
+                            <a href="marcoTeorico.html#metodologia" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Metodología</div>
+                            </a>
+                            <a href="marcoTeorico.html#planificacion-actividades"
+                                class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Planificación de Actividades</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Análisis Estructurado Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open"
+                            class="flex items-center justify-between w-full py-3 px-4 rounded-lg bg-primary/10 text-primary transition-colors">
+                            <div class="font-medium">Análisis Estructurado</div>
+                            <i class="fas fa-chevron-down text-primary transition-transform duration-300"
+                                :class="{ 'rotate-180': open }"></i>
+                        </button>
+
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-primary pl-4">
+                            <a href="#modelo-ambiental" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Modelo Ambiental</div>
+                            </a>
+                            <a href="#modelo-comportamiento" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Modelo de Comportamiento</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Orientado a Objetos Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open"
+                            class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Orientado a Objetos</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"
+                                :class="{ 'rotate-180': open }"></i>
+                        </button>
+
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <a href="orientadoObjetos.html" class="block py-2 text-gray-600 hover:text-primary">Diagrama
+                                de Clases</a>
+                            <a href="orientadoObjetos.html#casos-uso"
+                                class="block py-2 text-gray-600 hover:text-primary">Diagrama de Casos de Uso</a>
+                            <a href="orientadoObjetos.html#tipo-texto"
+                                class="block py-2 text-gray-600 hover:text-primary">Casos de Uso (Texto)</a>
+                        </div>
+                    </div>
+
+                    <a href="video.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Video</div>
+                        <i class="fas fa-video text-gray-400"></i>
+                    </a>
+
+                    <a href="contacto.html"
+                        class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Contacto</div>
+                        <i class="fas fa-address-book text-gray-400"></i>
+                    </a>
+                </div>
+
+                <!-- User Actions in Mobile -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="flex-1 text-center py-2 bg-primary text-white rounded-lg hover:bg-accent transition-colors">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                        </a>
+                        <a href="#"
+                            class="flex-1 text-center py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                            <i class="fas fa-user-plus mr-2"></i> Registrarse
                         </a>
                     </div>
-                    <div class="logo-text">OCHETO COFFEE</div>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li class="tooltip"><a href="marcoTeorico.html">Marco Teorico</a>
-                        <span class="tooltip-cont">*Marco teorico*</span>
-                    </li>
-                    <li class="tooltip"><a href="analisisEstructurado.html">Analisis Estructurado</a>
-                        <span class="tooltip-cont">*Analisis Estructurado*</span>
-                    </li>
-                    <li class="tooltip"><a href="orientadoObjetos.html">Orientado a objetos</a>
-                        <span class="tooltip-cont">*orientado a objetos*</span>
-                    </li>
-                    <li class="tooltip"><a href="#video">Video</a>
-                        <span class="tooltip-cont">*video*</span>
-                    </li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <section id="modelo-ambiental">
-            <h2 class="h2-t">MODELO AMBIENTAL</h2>
-
-            <div class="content">
-                <h3 class="tooltip-trigger">Diagrama de Contexto
-                    <span class="tooltip-content">
-                        Representación de alto nivel que muestra el sistema como un único proceso y sus interacciones
-                        con entidades externas.
-                    </span>
-                </h3>
-                <div id="declaracion-propositos">
-                    <h3>
-                        A) DECLARACIÓN DE PROPÓSITOS.
-                    </h3>
-                    <div>
-                        <p>El Sistema de Ventas para la Cafetería "Ocheto" es una solución de software integral diseñada
-                            para automatizar y optimizar los procesos operativos y administrativos del negocio. Su
-                            propósito principal es reemplazar los métodos manuales actuales por un sistema digital.</p>
-                    </div>
+    <!-- Main Content - Análisis Estructurado -->
+    <main class="mt-24 pt-8 pb-16">
+        <div class="container mx-auto px-4">
+            <!-- Encabezado de la página -->
+            <div class="text-center mb-12" data-animation="fade-up">
+                <div class="inline-flex items-center justify-center mb-4">
+                    <div class="w-16 h-0.5 bg-primary/30 mr-4"></div>
+                    <span class="text-sm font-medium text-primary tracking-widest uppercase">Análisis del Sistema</span>
+                    <div class="w-16 h-0.5 bg-primary/30 ml-4"></div>
                 </div>
-                <div id="diagrama-contexto" class="blog-content">
-                    <h3 class="blog-title">
-                        B) DIAGRAMA DE CONTEXTO.
-                    </h3>
-                    <br>
-                    <div>
-                        <img src="assets/img/diagramas/DC.jpg" alt="blog image">
-                    </div>
-                </div>
-                <div id="lista-acontecimiento" class="blog-content">
-                    <h3 class="blog-title">
-                        C) LISTA DE ACONTECIMIENTOS.
-                    </h3>
-                    <div class="entry-summary">
-                        <blockquote>
-                            <p> <b>N° Acontecimiento</b><br>
-                                Cajero ingresa datos para registrar una nueva venta. <br>
-                                Cajero ingresa datos para consultar la disponibilidad de un producto. <br>
-                                Cajero ingresa datos para modificar un pedido pendiente. <br>
-                                Cajero ingresa datos para cancelar un pedido antes de su finalización. <br>
-                                Gerente ingresa datos para dar de alta a un nuevo producto en el menú. <br>
-                                Gerente ingresa datos para dar de baja a un producto del menú. <br>
-                                Gerente ingresa datos para dar de alta a un nuevo usuario del sistema
-                                (cajero/administrador). <br>
-                                Gerente ingresa datos para dar de baja a un usuario del sistema. <br>
-                                Gerente ingresa datos para registrar la entrada de nueva mercadería al inventario. <br>
-                                Gerente solicita datos para generar un reporte de ventas. <br>
-                                Gerente solicita datos para generar un reporte de inventario. <br>
-                                Gerente solicita datos para generar un reporte de rendimiento del personal. <br>
-                            </p>
-
-                        </blockquote>
-                    </div>
-
-                </div>
+                
+                <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-accent mb-6">
+                    Análisis <span class="text-primary">Estructurado</span>
+                </h1>
+                
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Modelado detallado del sistema de gestión para la cafetería OCHETO utilizando metodologías de análisis estructurado.
+                    Incluye diagramas de contexto, flujo de datos y entidad-relación.
+                </p>
             </div>
-        </section>
-        <section id="modelo-comportamiento">
-            <h2 class="h2-t">MODELO DE COMPORTAMIENTO</h2>
-            <div id="dfd-nivel-1" class="content">
 
-                <h3 class="tooltip-trigger">Diagrama de Flujo de Datos (DFD) por niveles
-                    <span class="tooltip-content">
-                        Desglose detallado de cada proceso principal mostrando subprocesos y flujos de datos.
-                    </span>
-                </h3>
-                <div>
-                    <h3>
-                        Nivel 1
-                    </h3>
-                    <br>
-                    <figure>
-                        <div>
-                            <div>
-                                <p>Diagrama Nivel 1 Grafico 0</p>
-                                <img src="assets/img/diagramas/DFD-1.jpg" alt="blog image" style="width: 80%;">
+            <!-- Sección Modelo Ambiental -->
+            <section id="modelo-ambiental" class="mb-16">
+                <!-- Título de sección con icono -->
+                <div class="flex items-center mb-8">
+                    <div class="h-12 w-1 bg-primary mr-4 rounded-full"></div>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-accent">
+                        Modelo Ambiental
+                    </h2>
+                </div>
+
+                <!-- Contenido principal -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+                    <!-- Diagrama de Contexto -->
+                    <div class="mb-10">
+                        <div class="content-tooltip inline-block mb-4">
+                            <h3 class="font-heading text-xl md:text-2xl font-bold text-accent mb-3 inline">
+                                Diagrama de Contexto
+                            </h3>
+                            <span class="tooltip-text">
+                                Representación de alto nivel que muestra el sistema como un único proceso y sus 
+                                interacciones con entidades externas.
+                            </span>
+                        </div>
+                        
+                        <!-- Declaración de Propósitos -->
+                        <div id="declaracion-propositos" class="mb-8">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                A) Declaración de Propósitos
+                            </h3>
+                            <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-5">
+                                <p class="text-gray-700 leading-relaxed">
+                                    El Sistema de Ventas para la Cafetería "Ocheto" es una solución de software integral 
+                                    diseñada para automatizar y optimizar los procesos operativos y administrativos del 
+                                    negocio. Su propósito principal es reemplazar los métodos manuales actuales por un 
+                                    sistema digital que permita:
+                                </p>
+                                <ul class="mt-4 space-y-2 text-gray-700">
+                                    <li class="flex items-start">
+                                        <span class="inline-block mr-3 mt-1 text-primary">
+                                            <i class="fas fa-check-circle text-sm"></i>
+                                        </span>
+                                        <span>Gestión eficiente de ventas y pedidos</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="inline-block mr-3 mt-1 text-primary">
+                                            <i class="fas fa-check-circle text-sm"></i>
+                                        </span>
+                                        <span>Control en tiempo real del inventario</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="inline-block mr-3 mt-1 text-primary">
+                                            <i class="fas fa-check-circle text-sm"></i>
+                                        </span>
+                                        <span>Generación de reportes analíticos</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="inline-block mr-3 mt-1 text-primary">
+                                            <i class="fas fa-check-circle text-sm"></i>
+                                        </span>
+                                        <span>Mejora en la experiencia del cliente</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    </figure>
-                </div>
 
-                <div>
-                    <h3>
-                        Nivel 2
-                    </h3>
-                    <br>
-                    <figure>
-                        <div>
-                            <div>
-                                <p>Diagrama Nivel 2</p>
-                                <img src="assets/img/diagramas/DFD-2.jpg" alt="blog image" style="width: 80%;">
+                        <!-- Diagrama de Contexto Gráfico -->
+                        <div id="diagrama-contexto" class="mb-8">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                B) Diagrama de Contexto
+                            </h3>
+                            <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-inner">
+                                <div class="rounded-lg overflow-hidden shadow-md">
+                                    <img src="assets/img/diagramas/DC.jpg" 
+                                         alt="Diagrama de Contexto - Sistema de Gestión Cafetería OCHETO"
+                                         class="w-full h-auto content-image">
+                                </div>
+                                <div class="mt-4 text-center text-sm text-gray-500">
+                                    <p>Diagrama de contexto que muestra las interacciones entre el sistema y las entidades externas</p>
+                                </div>
                             </div>
                         </div>
-                    </figure>
-                </div>
 
-
-
-
-                <div id="entidad-relacion">
-                    <h3 class="tooltip-trigger"> Diagrama Entidad-Relación (ER)
-                        <span class="tooltip-content">
-                            Relaciones entre entidades de datos y sus atributos dentro del sistema.
-                        </span>
-                    </h3>
-                </div>
-
-                <div>
-                    <br>
-                    <figure>
-                        <div>
-                            <div>
-                                <p>Diagrama ER</p>
-                                <img src="assets/img/diagramas/ER.jpg" alt="blog image">
+                        <!-- Lista de Acontecimientos -->
+                        <div id="lista-acontecimiento" class="mb-6">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                C) Lista de Acontecimientos
+                            </h3>
+                            <div class="custom-blockquote">
+                                <div class="code-block">
+                                    <div class="text-secondary font-medium mb-2">N° Acontecimiento:</div>
+                                    <div class="space-y-2 text-sm">
+                                        <div>1. Cajero ingresa datos para registrar una nueva venta.</div>
+                                        <div>2. Cajero ingresa datos para consultar la disponibilidad de un producto.</div>
+                                        <div>3. Cajero ingresa datos para modificar un pedido pendiente.</div>
+                                        <div>4. Cajero ingresa datos para cancelar un pedido antes de su finalización.</div>
+                                        <div>5. Gerente ingresa datos para dar de alta a un nuevo producto en el menú.</div>
+                                        <div>6. Gerente ingresa datos para dar de baja a un producto del menú.</div>
+                                        <div>7. Gerente ingresa datos para dar de alta a un nuevo usuario del sistema (cajero/administrador).</div>
+                                        <div>8. Gerente ingresa datos para dar de baja a un usuario del sistema.</div>
+                                        <div>9. Gerente ingresa datos para registrar la entrada de nueva mercadería al inventario.</div>
+                                        <div>10. Gerente solicita datos para generar un reporte de ventas.</div>
+                                        <div>11. Gerente solicita datos para generar un reporte de inventario.</div>
+                                        <div>12. Gerente solicita datos para generar un reporte de rendimiento del personal.</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </figure>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Sección Modelo de Comportamiento -->
+            <section id="modelo-comportamiento" class="mb-16">
+                <!-- Título de sección con icono -->
+                <div class="flex items-center mb-8">
+                    <div class="h-12 w-1 bg-blue-500 mr-4 rounded-full"></div>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-accent">
+                        Modelo de Comportamiento
+                    </h2>
+                </div>
+
+                <!-- Contenido principal -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <!-- DFD por niveles -->
+                    <div id="dfd-nivel-1" class="mb-10">
+                        <div class="content-tooltip inline-block mb-4">
+                            <h3 class="font-heading text-xl md:text-2xl font-bold text-accent mb-3 inline">
+                                Diagrama de Flujo de Datos (DFD) por Niveles
+                            </h3>
+                            <span class="tooltip-text">
+                                Desglose detallado de cada proceso principal mostrando subprocesos y flujos de datos.
+                            </span>
+                        </div>
+
+                        <!-- DFD Nivel 1 -->
+                        <div class="mb-10">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                Nivel 1 - Diagrama de Contexto Expandido
+                            </h3>
+                            <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-inner mb-6">
+                                <div class="text-center mb-4">
+                                    <span class="inline-block bg-primary text-white text-xs font-medium px-3 py-1 rounded-full">
+                                        Gráfico 0
+                                    </span>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-md">
+                                    <img src="assets/img/diagramas/DFD-1.jpg" 
+                                         alt="Diagrama de Flujo de Datos Nivel 1 - Gráfico 0"
+                                         class="w-full h-auto content-image">
+                                </div>
+                                <div class="mt-4 text-center text-sm text-gray-500">
+                                    <p>Diagrama de flujo de datos nivel 1: vista general del sistema</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DFD Nivel 2 - Gráfico 1 -->
+                        <div class="mb-10">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                Nivel 2 - Procesos de Gestión de Pedidos
+                            </h3>
+                            <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-inner mb-6">
+                                <div class="text-center mb-4">
+                                    <span class="inline-block bg-blue-500 text-white text-xs font-medium px-3 py-1 rounded-full">
+                                        Gráfico 1
+                                    </span>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-md">
+                                    <img src="assets/img/diagramas/DFD2-1.jpg" 
+                                         alt="Diagrama de Flujo de Datos Nivel 2 - Gráfico 1"
+                                         class="w-full h-auto content-image">
+                                </div>
+                                <div class="mt-4 text-center text-sm text-gray-500">
+                                    <p>Proceso detallado de gestión de pedidos: recepción, procesamiento y facturación</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DFD Nivel 2 - Gráfico 2 -->
+                        <div class="mb-10">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                Nivel 2 - Procesos de Gestión de Inventario
+                            </h3>
+                            <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-inner mb-6">
+                                <div class="text-center mb-4">
+                                    <span class="inline-block bg-green-500 text-white text-xs font-medium px-3 py-1 rounded-full">
+                                        Gráfico 2
+                                    </span>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-md">
+                                    <img src="assets/img/diagramas/DFD2-2.jpg" 
+                                         alt="Diagrama de Flujo de Datos Nivel 2 - Gráfico 2"
+                                         class="w-full h-auto content-image">
+                                </div>
+                                <div class="mt-4 text-center text-sm text-gray-500">
+                                    <p>Proceso detallado de gestión de inventario: control de stock y reposición</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DFD Nivel 2 - Gráfico 3 -->
+                        <div class="mb-10">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                Nivel 2 - Procesos de Gestión de Usuarios
+                            </h3>
+                            <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-inner mb-6">
+                                <div class="text-center mb-4">
+                                    <span class="inline-block bg-purple-500 text-white text-xs font-medium px-3 py-1 rounded-full">
+                                        Gráfico 3
+                                    </span>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-md">
+                                    <img src="assets/img/diagramas/DFD2-3.jpg" 
+                                         alt="Diagrama de Flujo de Datos Nivel 2 - Gráfico 3"
+                                         class="w-full h-auto content-image">
+                                </div>
+                                <div class="mt-4 text-center text-sm text-gray-500">
+                                    <p>Proceso detallado de gestión de usuarios: registro, autenticación y permisos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DFD Nivel 2 - Gráfico 4 -->
+                        <div class="mb-10">
+                            <h3 class="font-heading text-lg md:text-xl font-bold text-accent mb-4">
+                                Nivel 2 - Procesos de Reportes y Análisis
+                            </h3>
+                            <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-inner mb-6">
+                                <div class="text-center mb-4">
+                                    <span class="inline-block bg-orange-500 text-white text-xs font-medium px-3 py-1 rounded-full">
+                                        Gráfico 4
+                                    </span>
+                                </div>
+                                <div class="rounded-lg overflow-hidden shadow-md">
+                                    <img src="assets/img/diagramas/DFD2-4.jpg" 
+                                         alt="Diagrama de Flujo de Datos Nivel 2 - Gráfico 4"
+                                         class="w-full h-auto content-image">
+                                </div>
+                                <div class="mt-4 text-center text-sm text-gray-500">
+                                    <p>Proceso detallado de generación de reportes: ventas, inventario y rendimiento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Diagrama Entidad-Relación -->
+                    <div id="entidad-relacion" class="mb-6">
+                        <div class="content-tooltip inline-block mb-4">
+                            <h3 class="font-heading text-xl md:text-2xl font-bold text-accent mb-3 inline">
+                                Diagrama Entidad-Relación (ER)
+                            </h3>
+                            <span class="tooltip-text">
+                                Relaciones entre entidades de datos y sus atributos dentro del sistema.
+                            </span>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-xl p-4 md:p-6 shadow-inner">
+                            <div class="rounded-lg overflow-hidden shadow-md">
+                                <img src="assets/img/diagramas/ER.jpg" 
+                                     alt="Diagrama Entidad-Relación - Base de datos Sistema OCHETO"
+                                     class="w-full h-auto content-image">
+                            </div>
+                            <div class="mt-4 text-center text-sm text-gray-500">
+                                <p>Diagrama entidad-relación que define la estructura de la base de datos del sistema</p>
+                            </div>
+                            
+                            <!-- Descripción de entidades principales -->
+                            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                                    <div class="text-primary text-lg font-bold mb-2">Clientes</div>
+                                    <p class="text-sm text-gray-600">Datos personales, historial de compras y preferencias</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                                    <div class="text-primary text-lg font-bold mb-2">Productos</div>
+                                    <p class="text-sm text-gray-600">Inventario, precios, categorías y disponibilidad</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                                    <div class="text-primary text-lg font-bold mb-2">Pedidos</div>
+                                    <p class="text-sm text-gray-600">Ventas, detalles de productos y estados de pedido</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                                    <div class="text-primary text-lg font-bold mb-2">Usuarios</div>
+                                    <p class="text-sm text-gray-600">Empleados, permisos y registro de actividades</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navegación entre secciones -->
+            <div class="flex flex-col sm:flex-row justify-between items-center mt-12 pt-8 border-t border-gray-200">
+                <a href="marcoTeorico.html" 
+                   class="group inline-flex items-center text-primary hover:text-accent transition-colors mb-4 sm:mb-0">
+                    <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                    Volver al Marco Teórico
+                </a>
+                
+                <a href="orientadoObjetos.html" 
+                   class="group inline-flex items-center px-5 py-3 bg-primary text-white rounded-lg hover:bg-accent transition-colors">
+                    Continuar al Análisis Orientado a Objetos
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </a>
             </div>
-        </section>
+        </div>
     </main>
 
-    <footer id="contacto">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>OCHETO COFFEE</h3>
-                    <p>La mejor experiencia cafetera en un ambiente elegante y acogedor.</p>
+    <!-- Footer - Mismo que index.html -->
+    <footer class="bg-accent text-white pt-16 pb-10" id="contacto">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Grid de información -->
+                <div class="grid md:grid-cols-4 gap-8 lg:gap-12 mb-12">
+                    <!-- Logo y descripción (col-span-2 en desktop) -->
+                    <div class="md:col-span-2">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-secondary">
+                                <img src="assets/img/logo.jpg" alt="Logo Ocheto" class="h-full w-full object-cover">
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-heading text-2xl font-bold">OCHETO</span>
+                                <span class="text-sm text-secondary font-medium">COFFEE</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 max-w-md mb-6 text-sm">
+                            Un espacio minimalista dedicado al café de calidad. Donde cada detalle importa.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#"
+                                class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-instagram text-white"></i>
+                            </a>
+                            <a href="#"
+                                class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-facebook-f text-white"></i>
+                            </a>
+                            <a href="#"
+                                class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-twitter text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Horarios -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold mb-6 pb-3 border-b border-secondary inline-block">
+                            Horarios</h3>
+                        <ul class="space-y-4 text-gray-300 text-sm">
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Lun - Vie:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">7:00 - 20:00</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Sábados:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">8:00 - 18:00</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Domingos:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">9:00 - 16:00</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contacto -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold mb-6 pb-3 border-b border-secondary inline-block">
+                            Contacto</h3>
+                        <ul class="space-y-4 text-gray-300 text-sm">
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Teléfono</span>
+                                    <span>78823697</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Email</span>
+                                    <span>angelo_17jm@hotmail.com</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Ubicación</span>
+                                    <span class="text-xs">La Paz, Bolivia</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Horarios</h3>
-                    <ul>
-                        <li>Lunes a Viernes: 7:00 - 20:00</li>
-                        <li>Sábados: 8:00 - 18:00</li>
-                        <li>Domingos: 9:00 - 16:00</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li>Teléfono: 78823697</li>
-                        <li>Email: angelo_17jm@hotmail.com</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Síguenos</h3>
-                    <ul>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Dirección</h3>
+
+                <!-- Mapa -->
+                <div class="mb-12 rounded-xl overflow-hidden shadow-2xl">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.38414258601!2d-68.13554243390426!3d-16.49898739394061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f21001b5174c5%3A0x824aeeaf8c636ce1!2sOcheto%20Coffee!5e0!3m2!1ses-419!2sus!4v1762118633585!5m2!1ses-419!2sus"
-                        width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
+                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" class="rounded-lg">
                     </iframe>
-                    <p>C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel
-                        Sajama., La
-                        Paz, Bolivia</p>
                 </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+
+                <!-- Dirección detallada -->
+                <div class="mb-8 text-center">
+                    <p class="text-sm text-gray-300 max-w-2xl mx-auto">
+                        <i class="fas fa-map-pin text-secondary mr-2"></i>
+                        C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel
+                        Sajama., La Paz, Bolivia
+                    </p>
+                </div>
+
+                <!-- Copyright y Enlaces -->
+                <div class="pt-8 border-t border-gray-700">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-4 md:mb-0 text-gray-400 text-sm">
+                            <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+                        </div>
+                        <div class="flex space-x-6 text-sm">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Política
+                                de Privacidad</a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Términos
+                                de Servicio</a>
+                            <a href="contacto.html"
+                                class="text-secondary hover:text-white transition-colors duration-300">Contacto</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
-</body>
 
+    <!-- JavaScript -->
+    <script>
+        // Configuración de Tailwind (mismo que index.html)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#8B4513',
+                        'secondary': '#D4A76A',
+                        'accent': '#5D4037',
+                        'light': '#F5F5F5',
+                        'dark': '#2C2C2C',
+                    }
+                }
+            }
+        }
+
+        // Aplicación principal con Alpine.js
+        function app() {
+            return {
+                init() {
+                    console.log('OCHETO COFFEE - Análisis Estructurado página iniciada');
+                    
+                    // Inicializar tooltips para contenido
+                    this.initializeContentTooltips();
+                    
+                    // Añadir animaciones a elementos al hacer scroll
+                    this.setupScrollAnimations();
+                    
+                    // Inicializar navegación entre secciones
+                    this.setupSectionNavigation();
+                },
+
+                // Inicializar tooltips para el contenido
+                initializeContentTooltips() {
+                    // Los tooltips ya funcionan con CSS, pero podemos añadir interactividad adicional
+                    const tooltips = document.querySelectorAll('.content-tooltip');
+                    
+                    tooltips.forEach(tooltip => {
+                        // Añadir evento para cerrar tooltip al hacer clic fuera (en móviles)
+                        tooltip.addEventListener('click', (e) => {
+                            if (window.innerWidth < 768) {
+                                e.preventDefault();
+                                // En móviles, los tooltips pueden mostrarse al tocar
+                                const tooltipText = tooltip.querySelector('.tooltip-text');
+                                if (tooltipText) {
+                                    tooltipText.classList.toggle('mobile-visible');
+                                }
+                            }
+                        });
+                    });
+                },
+
+                // Configurar animaciones al hacer scroll
+                setupScrollAnimations() {
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, observerOptions);
+
+                    // Observar cada sección principal para animaciones
+                    document.querySelectorAll('section').forEach(section => {
+                        observer.observe(section);
+                    });
+                    
+                    // Observar imágenes para animaciones
+                    document.querySelectorAll('.content-image').forEach(image => {
+                        observer.observe(image);
+                    });
+                },
+
+                // Configurar navegación entre secciones
+                setupSectionNavigation() {
+                    // Añadir indicadores visuales para la sección activa
+                    window.addEventListener('scroll', () => {
+                        const sections = document.querySelectorAll('section');
+                        const scrollPosition = window.scrollY + 100;
+                        
+                        sections.forEach(section => {
+                            const sectionTop = section.offsetTop;
+                            const sectionHeight = section.clientHeight;
+                            const sectionId = section.getAttribute('id');
+                            
+                            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                                // Actualizar enlace activo en el menú
+                                this.updateActiveNavLink(sectionId);
+                            }
+                        });
+                    });
+                },
+
+                // Actualizar enlace activo en el menú
+                updateActiveNavLink(sectionId) {
+                    // Esto es solo un ejemplo básico
+                    // En una implementación real, se actualizarían los enlaces del menú
+                    console.log(`Sección activa: ${sectionId}`);
+                }
+            }
+        }
+
+        // Smooth scroll para enlaces internos
+        document.addEventListener('DOMContentLoaded', function () {
+            // Smooth scroll para enlaces con hash
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+
+                        // Cerrar menú móvil si está abierto
+                        if (window.innerWidth < 1024) {
+                            const header = document.getElementById('header');
+                            const alpineData = header.__x.$data;
+                            if (alpineData && alpineData.mobileMenuOpen) {
+                                alpineData.mobileMenuOpen = false;
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Añadir clase de scroll al header
+            window.addEventListener('scroll', function () {
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mejorar la experiencia en móviles para tooltips
+            if (window.innerWidth < 768) {
+                // Añadir clase para tooltips en móviles
+                const style = document.createElement('style');
+                style.textContent = `
+                    @media (max-width: 768px) {
+                        .content-tooltip .tooltip-text.mobile-visible {
+                            visibility: visible !important;
+                            opacity: 1 !important;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            // Añadir año actual al copyright (si existe)
+            const yearElement = document.querySelector('#current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
 </html>
