@@ -1,14 +1,18 @@
 <!doctype html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>OCHETO - Blog y Sistema de Ventas</title>
     <meta name="description" content="Sistema de ventas para la Cafetería OCHETO. Productos, análisis y diagramas." />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="assets/css/analisis.css">
 </head>
+
 <body>
     <header id="header">
         <div class="menu-container">
@@ -43,60 +47,124 @@
     </header>
 
     <main class="container">
-    <section id="analisis-estructurado">
-            <h2 class="h2-t">II. ANÁLISIS Y DISEÑO ESTRUCTURADO</h2>
-            
+        <section id="modelo-ambiental">
+            <h2 class="h2-t">MODELO AMBIENTAL</h2>
+
             <div class="content">
                 <h3 class="tooltip-trigger">Diagrama de Contexto
                     <span class="tooltip-content">
-                        Representación de alto nivel que muestra el sistema como un único proceso y sus interacciones con entidades externas.
+                        Representación de alto nivel que muestra el sistema como un único proceso y sus interacciones
+                        con entidades externas.
                     </span>
                 </h3>
-                <p>El sistema de gestión de cafetería interactúa con:</p>
-                <ul>
-                    <li>Clientes (realizan pedidos)</li>
-                    <li>Personal de cocina (preparan pedidos)</li>
-                    <li>Administrador (genera reportes)</li>
-                    <li>Proveedores (suministran ingredientes)</li>
-                </ul>
-                
-                <h3 class="tooltip-trigger">Diagrama de Flujo de Datos (DFD) Nivel 0
-                    <span class="tooltip-content">
-                        Descomposición del diagrama de contexto que muestra los procesos principales del sistema.
-                    </span>
-                </h3>
-                <p>Procesos principales:</p>
-                <ul>
-                    <li>Gestión de Pedidos</li>
-                    <li>Gestión de Inventario</li>
-                    <li>Gestión de Clientes</li>
-                    <li>Generación de Reportes</li>
-                </ul>
-                
-                <h3 class="tooltip-trigger">Diagrama de Flujo de Datos (DFD) Nivel 1
+                <div id="declaracion-propositos">
+                    <h3>
+                        A) DECLARACIÓN DE PROPÓSITOS.
+                    </h3>
+                    <div>
+                        <p>El Sistema de Ventas para la Cafetería "Ocheto" es una solución de software integral diseñada
+                            para automatizar y optimizar los procesos operativos y administrativos del negocio. Su
+                            propósito principal es reemplazar los métodos manuales actuales por un sistema digital.</p>
+                    </div>
+                </div>
+                <div id="diagrama-contexto" class="blog-content">
+                    <h3 class="blog-title">
+                        B) DIAGRAMA DE CONTEXTO.
+                    </h3>
+                    <br>
+                    <div>
+                        <img src="assets/img/diagramas/DC.jpg" alt="blog image">
+                    </div>
+                </div>
+                <div id="lista-acontecimiento" class="blog-content">
+                    <h3 class="blog-title">
+                        C) LISTA DE ACONTECIMIENTOS.
+                    </h3>
+                    <div class="entry-summary">
+                        <blockquote>
+                            <p> <b>N° Acontecimiento</b><br>
+                                Cajero ingresa datos para registrar una nueva venta. <br>
+                                Cajero ingresa datos para consultar la disponibilidad de un producto. <br>
+                                Cajero ingresa datos para modificar un pedido pendiente. <br>
+                                Cajero ingresa datos para cancelar un pedido antes de su finalización. <br>
+                                Gerente ingresa datos para dar de alta a un nuevo producto en el menú. <br>
+                                Gerente ingresa datos para dar de baja a un producto del menú. <br>
+                                Gerente ingresa datos para dar de alta a un nuevo usuario del sistema
+                                (cajero/administrador). <br>
+                                Gerente ingresa datos para dar de baja a un usuario del sistema. <br>
+                                Gerente ingresa datos para registrar la entrada de nueva mercadería al inventario. <br>
+                                Gerente solicita datos para generar un reporte de ventas. <br>
+                                Gerente solicita datos para generar un reporte de inventario. <br>
+                                Gerente solicita datos para generar un reporte de rendimiento del personal. <br>
+                            </p>
+
+                        </blockquote>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <section id="modelo-comportamiento">
+            <h2 class="h2-t">MODELO DE COMPORTAMIENTO</h2>
+            <div id="dfd-nivel-1" class="content">
+
+                <h3 class="tooltip-trigger">Diagrama de Flujo de Datos (DFD) por niveles
                     <span class="tooltip-content">
                         Desglose detallado de cada proceso principal mostrando subprocesos y flujos de datos.
                     </span>
                 </h3>
-                <p>Para el proceso de Gestión de Pedidos:</p>
-                <ul>
-                    <li>Registrar pedido</li>
-                    <li>Verificar disponibilidad</li>
-                    <li>Calcular total</li>
-                    <li>Actualizar inventario</li>
-                </ul>
-                
-                <h3 class="tooltip-trigger">Diccionario de Datos
-                    <span class="tooltip-content">
-                        Definición detallada de todos los elementos de datos utilizados en el sistema.
-                    </span>
-                </h3>
-                <p>Ejemplos:</p>
-                <ul>
-                    <li>Pedido = NúmeroPedido + Fecha + Cliente + ListaProductos + Total</li>
-                    <li>Producto = CódigoProducto + Nombre + Precio + Categoría</li>
-                    <li>Cliente = IDCliente + Nombre + Teléfono + Correo</li>
-                </ul>
+                <div>
+                    <h3>
+                        Nivel 1
+                    </h3>
+                    <br>
+                    <figure>
+                        <div>
+                            <div>
+                                <p>Diagrama Nivel 1 Grafico 0</p>
+                                <img src="assets/img/diagramas/DFD-1.jpg" alt="blog image" style="width: 80%;">
+                            </div>
+                        </div>
+                    </figure>
+                </div>
+
+                <div>
+                    <h3>
+                        Nivel 2
+                    </h3>
+                    <br>
+                    <figure>
+                        <div>
+                            <div>
+                                <p>Diagrama Nivel 2</p>
+                                <img src="assets/img/diagramas/DFD-2.jpg" alt="blog image" style="width: 80%;">
+                            </div>
+                        </div>
+                    </figure>
+                </div>
+
+
+
+
+                <div id="entidad-relacion">
+                    <h3 class="tooltip-trigger"> Diagrama Entidad-Relación (ER)
+                        <span class="tooltip-content">
+                            Relaciones entre entidades de datos y sus atributos dentro del sistema.
+                        </span>
+                    </h3>
+                </div>
+
+                <div>
+                    <br>
+                    <figure>
+                        <div>
+                            <div>
+                                <p>Diagrama ER</p>
+                                <img src="assets/img/diagramas/ER.jpg" alt="blog image">
+                            </div>
+                        </div>
+                    </figure>
+                </div>
             </div>
         </section>
     </main>
@@ -149,4 +217,5 @@
         </div>
     </footer>
 </body>
+
 </html>

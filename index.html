@@ -1,134 +1,1652 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" x-data="app()" x-cloak>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafetería - OCHETO</title>
+    <title>Cafetería OCHETO - Inicio</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- Tailwind CSS PRODUCTION VERSION -->
+    <script src="https://cdn.tailwindcss.com/3.4.1?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    
+    <!-- Alpine.js con Collapse Plugin -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        :root {
+            --color-primary: #8B4513;
+            --color-secondary: #D4A76A;
+            --color-accent: #5D4037;
+            --color-light: #F5F5F5;
+            --color-dark: #2C2C2C;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+        
+        .font-heading {
+            font-family: var(--font-heading);
+        }
+        
+        .font-body {
+            font-family: var(--font-body);
+        }
+        
+        .text-primary { color: var(--color-primary); }
+        .text-secondary { color: var(--color-secondary); }
+        .text-accent { color: var(--color-accent); }
+        .bg-primary { background-color: var(--color-primary); }
+        .bg-secondary { background-color: var(--color-secondary); }
+        .bg-accent { background-color: var(--color-accent); }
+        .bg-light { background-color: var(--color-light); }
+        
+        /* Swiper custom styles */
+        .swiper-pagination-bullet {
+            background-color: white;
+            opacity: 0.5;
+            width: 12px;
+            height: 12px;
+            margin: 0 6px !important;
+        }
+        
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            background-color: var(--color-secondary);
+        }
+        
+        .swiper-button-next, .swiper-button-prev {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 20px;
+        }
+        
+        /* Diagram swiper styles */
+        .diagram-swiper .swiper-pagination-bullet {
+            background-color: var(--color-accent);
+            opacity: 0.5;
+        }
+        
+        .diagram-swiper .swiper-pagination-bullet-active {
+            opacity: 1;
+            background-color: var(--color-primary);
+        }
+        
+        .diagram-swiper .swiper-button-next, 
+        .diagram-swiper .swiper-button-prev {
+            color: var(--color-accent);
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 40px;
+            height: 40px;
+        }
+        
+        .diagram-swiper .swiper-button-next:hover, 
+        .diagram-swiper .swiper-button-prev:hover {
+            background-color: white;
+        }
+        
+        /* Custom animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Dropdown menu styles */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .dropdown-submenu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .dropdown-submenu-trigger:hover .dropdown-submenu,
+        .dropdown-submenu-trigger:focus-within .dropdown-submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        
+        /* Search box styles */
+        .search-box {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+        }
+        
+        .search-box.open {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        
+        /* Tooltip styles */
+        .tooltip-container {
+            position: relative;
+        }
+        
+        .tooltip-content {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background-color: var(--color-accent);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        
+        .tooltip-container:hover .tooltip-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--color-light);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-secondary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+        
+        /* Glass effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Diagram card hover effect */
+        .diagram-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .diagram-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Header animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-slide-down {
+            animation: slideDown 0.3s ease forwards;
+        }
+        
+        /* Imagen de respaldo para "Sobre Nosotros" */
+        .about-image {
+            background-color: #f5f1eb;
+            background-image: linear-gradient(45deg, #e8d9c8 25%, transparent 25%, transparent 75%, #e8d9c8 75%, #e8d9c8), 
+                              linear-gradient(45deg, #e8d9c8 25%, transparent 25%, transparent 75%, #e8d9c8 75%, #e8d9c8);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+        /* Asegurar que los dropdowns no corten los tooltips */
+        .dropdown-menu {
+            overflow: visible !important;
+        }
 
+        .dropdown-submenu {
+            overflow: visible !important;
+        }
+
+        /* Ajustes para tooltips en submenús */
+        .dropdown-submenu .absolute {
+            z-index: 60; /* Mayor que el z-50 del menú principal */
+        }
+
+        /* Ocultar tooltips en dispositivos móviles */
+        @media (max-width: 1024px) {
+            .dropdown-menu .absolute {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <!-- Header y Navegación -->
-    <header id="header">
-        <div class="container">
-            <nav class="nav-container">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <a href="index.html">
-                            <img src="assets/img/logo.jpg" style="height: 60px; width: 60px; border-radius: 50%;">
+<body class="font-body text-gray-800 bg-light">
+    <!-- Header y Navegación Mejorado -->
+<!-- Header y Navegación - VERSIÓN CON TOOLTIPS A LA DERECHA -->
+    <header id="header" 
+            x-data="{ 
+                scrolled: false, 
+                mobileMenuOpen: false,
+                searchOpen: false,
+                activeDropdown: null
+            }" 
+            @scroll.window="scrolled = window.scrollY > 50"
+            :class="scrolled ? 'py-3 shadow-lg bg-white/95 backdrop-blur-sm' : 'py-4 bg-white/90'" 
+            class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3 group">
+                        <div class="h-12 w-12 md:h-14 md:w-14 rounded-full overflow-hidden border-2 border-accent group-hover:scale-105 transition-transform duration-300">
+                            <img src="assets/img/logo.jpg" alt="Logo Ocheto" class="h-full w-full object-cover">
+                        </div>
+                        <div class="font-heading text-xl md:text-2xl font-bold text-accent">OCHETO COFFEE</div>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation with Dropdowns - CON TOOLTIPS A LA DERECHA -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <!-- Inicio - SIN TOOLTIP -->
+                    <a href="index.html" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Inicio
+                    </a>
+                    
+                    <!-- Productos - SIN TOOLTIP -->
+                    <a href="productos.html" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Productos
+                    </a>
+                    
+                    <!-- Marco Teórico Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="marcoTeorico.html" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Marco Teórico
+                            <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-menu absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Introducción -->
+                            <a href="marcoTeorico.html" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Introducción</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Visión general del proyecto</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Documentación teórica inicial del sistema de la cafetería
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Antecedentes -->
+                            <a href="marcoTeorico.html#antecedentes" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Antecedentes</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Historial y contexto del proyecto</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Análisis histórico y contexto del proyecto cafetero
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Planteamiento del Problema -->
+                            <a href="marcoTeorico.html#planificacion" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Planteamiento del Problema</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Definición del problema central</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Identificación y formulación del problema principal del sistema
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Árbol de Problemas -->
+                            <a href="marcoTeorico.html#arbol-problemas" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Árbol de Problemas</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Análisis causal del problema</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Diagrama de causas y efectos del problema identificado
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Formulación del Problema -->
+                            <a href="marcoTeorico.html#formulacion" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Formulación del Problema</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Preguntas de investigación</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Preguntas de investigación que guían el estudio del sistema
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Propósito del Estudio -->
+                            <a href="marcoTeorico.html#proposito" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Propósito del Estudio</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Objetivos y alcance</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Objetivos generales y específicos del estudio del sistema
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Metodología de Investigación -->
+                            <a href="marcoTeorico.html#metodologia" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Metodología de Investigación</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Enfoque y métodos utilizados</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Enfoques metodológicos y técnicas de investigación aplicadas
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Planificación de Actividades -->
+                            <a href="marcoTeorico.html#planificacion-actividades" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Planificación de Actividades</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Cronograma y tareas</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Cronograma detallado de actividades del proyecto
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Análisis Estructurado Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="analisisEstructurado.html" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Análisis Estructurado
+                            <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+                        
+                        <!-- Dropdown Menu with Submenu -->
+                        <div class="dropdown-menu absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Modelo Ambiental with Submenu -->
+                            <div class="dropdown-submenu-trigger relative">
+                                <a href="modelo-ambiental.html" 
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Modelo Ambiental</div>
+                                        <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Contexto y límites del sistema</div> -->
+                                    </div>
+                                    
+                                    <!-- Tooltip a la derecha -->
+                                    <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                                transition-all duration-300 ease-out
+                                                absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                                text-white bg-accent rounded-lg shadow-lg 
+                                                left-full ml-3 top-1/2 transform -translate-y-1/2
+                                                pointer-events-none">
+                                        <div class="relative">
+                                            Análisis del entorno y límites del sistema de la cafetería
+                                            <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <i class="fas fa-chevron-right text-xs ml-2"></i>
+                                </a>
+                                
+                                <!-- Submenu -->
+                                <div class="dropdown-submenu absolute left-full top-0 ml-1 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                                    <!-- Declaración de Propósitos -->
+                                    <a href="modelo-ambiental.html" 
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                        <div class="flex-1">
+                                            <div class="font-medium">Declaración de Propósitos</div>
+                                            <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Objetivos del sistema</div> -->
+                                        </div>
+                                        
+                                        <!-- Tooltip a la derecha -->
+                                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                                    transition-all duration-300 ease-out
+                                                    absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                                    text-white bg-accent rounded-lg shadow-lg 
+                                                    left-full ml-3 top-1/2 transform -translate-y-1/2
+                                                    pointer-events-none">
+                                            <div class="relative">
+                                                Objetivos y propósitos principales del sistema de gestión
+                                                <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Diagrama de Contexto -->
+                                    <a href="modelo-ambiental.html#diagrama-contexto" 
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                        <div class="flex-1">
+                                            <div class="font-medium">Diagrama de Contexto</div>
+                                            <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Interacciones del sistema</div> -->
+                                        </div>
+                                        
+                                        <!-- Tooltip a la derecha -->
+                                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                                    transition-all duration-300 ease-out
+                                                    absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                                    text-white bg-accent rounded-lg shadow-lg 
+                                                    left-full ml-3 top-1/2 transform -translate-y-1/2
+                                                    pointer-events-none">
+                                            <div class="relative">
+                                                Diagrama que muestra las interacciones del sistema con su entorno
+                                                <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Lista de Acontecimientos -->
+                                    <a href="modelo-ambiental.html#lista-acontecimiento" 
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                        <div class="flex-1">
+                                            <div class="font-medium">Lista de Acontecimientos</div>
+                                            <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Eventos del sistema</div> -->
+                                        </div>
+                                        
+                                        <!-- Tooltip a la derecha -->
+                                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                                    transition-all duration-300 ease-out
+                                                    absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                                    text-white bg-accent rounded-lg shadow-lg 
+                                                    left-full ml-3 top-1/2 transform -translate-y-1/2
+                                                    pointer-events-none">
+                                            <div class="relative">
+                                                Lista de eventos que activan procesos del sistema
+                                                <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Modelo de Comportamiento with Submenu -->
+                            <div class="dropdown-submenu-trigger relative">
+                                <a href="modelo-de-comportamiento.html" 
+                                class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Modelo de Comportamiento</div>
+                                        <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Funcionamiento interno</div> -->
+                                    </div>
+                                    
+                                    <!-- Tooltip a la derecha -->
+                                    <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                                transition-all duration-300 ease-out
+                                                absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                                text-white bg-accent rounded-lg shadow-lg 
+                                                left-full ml-3 top-1/2 transform -translate-y-1/2
+                                                pointer-events-none">
+                                        <div class="relative">
+                                            Modelo que describe el funcionamiento interno del sistema
+                                            <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <i class="fas fa-chevron-right text-xs ml-2"></i>
+                                </a>
+                                
+                                <!-- Submenu -->
+                                <div class="dropdown-submenu absolute left-full top-0 ml-1 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                                    <!-- DFD por Niveles -->
+                                    <a href="modelo-de-comportamiento.html" 
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                        <div class="flex-1">
+                                            <div class="font-medium">DFD por Niveles</div>
+                                            <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Diagramas de flujo de datos</div> -->
+                                        </div>
+                                        
+                                        <!-- Tooltip a la derecha -->
+                                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                                    transition-all duration-300 ease-out
+                                                    absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                                    text-white bg-accent rounded-lg shadow-lg 
+                                                    left-full ml-3 top-1/2 transform -translate-y-1/2
+                                                    pointer-events-none">
+                                            <div class="relative">
+                                                Diagramas de flujo de datos del sistema en diferentes niveles
+                                                <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- DER -->
+                                    <a href="modelo-de-comportamiento.html#entidad-relacion" 
+                                    class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                        <div class="flex-1">
+                                            <div class="font-medium">DER</div>
+                                            <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Diagrama entidad-relación</div> -->
+                                        </div>
+                                        
+                                        <!-- Tooltip a la derecha -->
+                                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                                    transition-all duration-300 ease-out
+                                                    absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                                    text-white bg-accent rounded-lg shadow-lg 
+                                                    left-full ml-3 top-1/2 transform -translate-y-1/2
+                                                    pointer-events-none">
+                                            <div class="relative">
+                                                Diagrama entidad-relación de la base de datos del sistema
+                                                <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Orientado a Objetos Dropdown -->
+                    <div class="dropdown relative">
+                        <a href="orientadoObjetos.html" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center group">
+                            Orientado a Objetos
+                            <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        </a>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-menu absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <!-- Diagrama de Clases -->
+                            <a href="orientadoObjetos.html" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Diagrama de Clases</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Estructura del sistema</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Modelo estático de clases del sistema orientado a objetos
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Diagrama de Casos de Uso -->
+                            <a href="orientadoObjetos.html#casos-uso" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Diagrama de Casos de Uso</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Interacción con usuarios</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Diagrama que muestra la interacción de usuarios con el sistema
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Casos de Uso (Texto) -->
+                            <a href="orientadoObjetos.html#tipo-texto" 
+                            class="group relative flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+                                <div class="flex-1">
+                                    <div class="font-medium">Casos de Uso (Texto)</div>
+                                    <!-- <div class="text-xs text-gray-500 mt-1 group-hover:text-white/80">Descripción detallada</div> -->
+                                </div>
+                                
+                                <!-- Tooltip a la derecha -->
+                                <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 
+                                            transition-all duration-300 ease-out
+                                            absolute z-50 w-48 px-3 py-2 text-xs font-normal 
+                                            text-white bg-accent rounded-lg shadow-lg 
+                                            left-full ml-3 top-1/2 transform -translate-y-1/2
+                                            pointer-events-none">
+                                    <div class="relative">
+                                        Descripción textual detallada de cada caso de uso del sistema
+                                        <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-accent"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Video - SIN TOOLTIP -->
+                    <a href="video.html" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Video
+                    </a>
+                    
+                    <!-- Diagramas - SIN TOOLTIP -->
+                    <a href="#diagramas" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Diagramas
+                    </a>
+                    
+                    <!-- Contacto - SIN TOOLTIP -->
+                    <a href="contacto.html" class="relative px-4 py-2 font-medium text-gray-700 hover:text-primary transition-colors duration-300 flex items-center">
+                        Contacto
+                    </a>
+                </nav>
+                
+                <!-- Search and User Actions (sin cambios) -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <!-- Search Button -->
+                    <div class="relative">
+                        <button @click="searchOpen = !searchOpen" class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300">
+                            <i class="fas fa-search text-gray-700"></i>
+                        </button>
+                        
+                        <!-- Search Box -->
+                        <div class="search-box absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-xl p-4 z-50" :class="{ 'open': searchOpen }">
+                            <div class="flex items-center">
+                                <input type="text" placeholder="Buscar productos, información..." 
+                                    class="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <button class="px-4 py-2 bg-primary text-white rounded-r-lg hover:bg-accent transition-colors">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-500">
+                                <p>Busca entre nuestros productos y documentación del proyecto.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Menu -->
+                    <div class="dropdown relative">
+                        <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300">
+                            <i class="fas fa-user text-gray-700"></i>
+                        </button>
+                        
+                        <!-- User Dropdown Menu -->
+                        <div class="dropdown-menu absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50">
+                            <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                            </a>
+                            <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-user-plus mr-2"></i> Registrarse
+                            </a>
+                            <div class="border-t my-2"></div>
+                            <a href="contacto.html" class="block px-4 py-3 text-gray-700 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fas fa-question-circle mr-2"></i> Ayuda
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu with Dropdowns (sin cambios - sin tooltips) -->
+        <div x-show="mobileMenuOpen" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-2"
+            class="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="container mx-auto px-4 py-6">
+                <!-- Search in Mobile -->
+                <div class="mb-6">
+                    <div class="flex items-center bg-gray-100 rounded-lg p-2">
+                        <i class="fas fa-search text-gray-500 mx-2"></i>
+                        <input type="text" placeholder="Buscar..." class="flex-1 bg-transparent outline-none">
+                        <button class="ml-2 px-3 py-1 bg-primary text-white rounded-md text-sm">Buscar</button>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Items -->
+                <div class="space-y-2">
+                    <a href="index.html" class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Inicio</div>
+                        <i class="fas fa-home text-gray-400"></i>
+                    </a>
+                    
+                    <a href="productos.html" class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Productos</div>
+                        <i class="fas fa-coffee text-gray-400"></i>
+                    </a>
+                    
+                    <!-- Marco Teórico Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Marco Teórico</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
+                        </button>
+                        
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <a href="marcoTeorico.html" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Introducción</div>
+                                <div class="text-xs text-gray-500 mt-1">Visión general del proyecto</div>
+                            </a>
+                            <a href="marcoTeorico.html#antecedentes" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Antecedentes</div>
+                                <div class="text-xs text-gray-500 mt-1">Historial y contexto del proyecto</div>
+                            </a>
+                            <a href="marcoTeorico.html#planificacion" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Planteamiento del Problema</div>
+                                <div class="text-xs text-gray-500 mt-1">Definición del problema central</div>
+                            </a>
+                            <a href="marcoTeorico.html#arbol-problemas" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Árbol de Problemas</div>
+                                <div class="text-xs text-gray-500 mt-1">Análisis causal del problema</div>
+                            </a>
+                            <a href="marcoTeorico.html#formulacion" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Formulación del Problema</div>
+                                <div class="text-xs text-gray-500 mt-1">Preguntas de investigación</div>
+                            </a>
+                            <a href="marcoTeorico.html#proposito" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Propósito del Estudio</div>
+                                <div class="text-xs text-gray-500 mt-1">Objetivos y alcance</div>
+                            </a>
+                            <a href="marcoTeorico.html#metodologia" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Metodología</div>
+                                <div class="text-xs text-gray-500 mt-1">Enfoque y métodos utilizados</div>
+                            </a>
+                            <a href="marcoTeorico.html#planificacion-actividades" class="block py-2 text-gray-600 hover:text-primary">
+                                <div class="font-medium">Planificación de Actividades</div>
+                                <div class="text-xs text-gray-500 mt-1">Cronograma y tareas</div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Análisis Estructurado Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Análisis Estructurado</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
+                        </button>
+                        
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <div x-data="{ subOpen: false }" class="relative">
+                                <button @click="subOpen = !subOpen" class="flex items-center justify-between w-full py-2 text-gray-600 hover:text-primary">
+                                    <span>Modelo Ambiental</span>
+                                    <i class="fas fa-chevron-right text-xs transition-transform duration-300" :class="{ 'rotate-90': subOpen }"></i>
+                                </button>
+                                <div x-show="subOpen" x-collapse class="ml-4 mt-1 space-y-1">
+                                    <a href="modelo-ambiental.html" class="block py-1 text-gray-500 hover:text-primary">Declaración de Propósitos</a>
+                                    <a href="modelo-ambiental.html#diagrama-contexto" class="block py-1 text-gray-500 hover:text-primary">Diagrama de Contexto</a>
+                                    <a href="modelo-ambiental.html#lista-acontecimiento" class="block py-1 text-gray-500 hover:text-primary">Lista de Acontecimientos</a>
+                                </div>
+                            </div>
+                            
+                            <div x-data="{ subOpen: false }" class="relative">
+                                <button @click="subOpen = !subOpen" class="flex items-center justify-between w-full py-2 text-gray-600 hover:text-primary">
+                                    <span>Modelo de Comportamiento</span>
+                                    <i class="fas fa-chevron-right text-xs transition-transform duration-300" :class="{ 'rotate-90': subOpen }"></i>
+                                </button>
+                                <div x-show="subOpen" x-collapse class="ml-4 mt-1 space-y-1">
+                                    <a href="modelo-de-comportamiento.html" class="block py-1 text-gray-500 hover:text-primary">DFD por Niveles</a>
+                                    <a href="modelo-de-comportamiento.html#entidad-relacion" class="block py-1 text-gray-500 hover:text-primary">DER</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Orientado a Objetos Mobile Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-medium">Orientado a Objetos</div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
+                        </button>
+                        
+                        <div x-show="open" x-collapse class="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
+                            <a href="orientadoObjetos.html" class="block py-2 text-gray-600 hover:text-primary">Diagrama de Clases</a>
+                            <a href="orientadoObjetos.html#casos-uso" class="block py-2 text-gray-600 hover:text-primary">Diagrama de Casos de Uso</a>
+                            <a href="orientadoObjetos.html#tipo-texto" class="block py-2 text-gray-600 hover:text-primary">Casos de Uso (Texto)</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#video" class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Video</div>
+                        <i class="fas fa-video text-gray-400"></i>
+                    </a>
+                    
+                    <a href="#diagramas" class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Diagramas</div>
+                        <i class="fas fa-diagram-project text-gray-400"></i>
+                    </a>
+                    
+                    <a href="contacto.html" class="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="font-medium">Contacto</div>
+                        <i class="fas fa-address-book text-gray-400"></i>
+                    </a>
+                </div>
+                
+                <!-- User Actions in Mobile -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div class="flex space-x-4">
+                        <a href="#" class="flex-1 text-center py-2 bg-primary text-white rounded-lg hover:bg-accent transition-colors">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Ingresar
+                        </a>
+                        <a href="#" class="flex-1 text-center py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                            <i class="fas fa-user-plus mr-2"></i> Registrarse
                         </a>
                     </div>
-                    <div class="logo-text">OCHETO COFFEE</div>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li class="tooltip1"><a href="marcoTeorico.html">Marco Teorico</a>
-                        <span class="tooltip-cont">*Marco teorico*</span>
-                    </li>
-                    <li class="tooltip1"><a href="analisisEstructurado.html">Analisis Estructurado</a>
-                        <span class="tooltip-cont">*Analisis Estructurado*</span>
-                    </li>
-                    <li class="tooltip1"><a href="orientadoObjetos.html">Orientado a objetos</a>
-                        <span class="tooltip-cont">*orientado a objetos*</span>
-                    </li>
-                    <li class="tooltip1"><a href="#video">Video</a>
-                        <span class="tooltip-cont">*video*</span>
-                    </li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Banner Rotatorio -->
-    <section class="banner-section" id="inicio">
-        <div class="banner-slide active" id="banner1"></div>
-        <div class="banner-slide" id="banner2"></div>
-        <div class="banner-slide" id="banner3"></div>
-
-        <div class="banner-content">
-            <div class="banner-logo">
-                <img src="assets/img/logo.jpg" style="height: 100%; width: 100%; border-radius: 50%;">
+    <!-- Banner Rotatorio con Swiper -->
+    <section class="relative mt-20 md:mt-24" id="inicio">
+        <div class="swiper banner-swiper h-screen">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/img/27.jpg')"></div>
+                    <div class="relative z-20 h-full flex items-center justify-center">
+                        <div class="container mx-auto px-4 text-center text-white">
+                            <div class="mb-8 animate__animated animate__fadeInUp">
+                                <div class="h-32 w-32 md:h-40 md:w-40 rounded-full bg-white/90 p-2 mx-auto overflow-hidden shadow-2xl animate-float">
+                                    <img src="assets/img/logo.jpg" alt="Logo Ocheto" class="h-full w-full object-cover rounded-full">
+                                </div>
+                            </div>
+                            <h1 class="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                                OCHETO COFFEE
+                            </h1>
+                            <p class="text-xl md:text-2xl mb-8 animate__animated animate__fadeInUp animate__delay-2s max-w-2xl mx-auto">
+                                Experiencia Cafetera Excepcional
+                            </p>
+                            <a href="productos.html" class="inline-block px-8 py-4 bg-primary text-white font-medium rounded-full hover:bg-accent transform hover:-translate-y-1 transition-all duration-300 shadow-xl hover:shadow-2xl animate__animated animate__fadeInUp animate__delay-3s">
+                                Ver Productos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="swiper-slide relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/img/45.jpg')"></div>
+                    <div class="relative z-20 h-full flex items-center justify-center">
+                        <div class="container mx-auto px-4 text-center text-white">
+                            <h2 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate__animated animate__fadeInDown">
+                                Calidad en Cada Taza
+                            </h2>
+                            <p class="text-xl md:text-2xl mb-8 animate__animated animate__fadeInUp animate__delay-1s max-w-3xl mx-auto">
+                                Granos seleccionados de origen, preparados con pasión y dedicación
+                            </p>
+                            <div class="flex justify-center space-x-4 animate__animated animate__fadeInUp animate__delay-2s">
+                                <a href="#sobre-nosotros" class="inline-block px-8 py-4 bg-transparent border-2 border-white text-white font-medium rounded-full hover:bg-white hover:text-primary transition-all duration-300">
+                                    Conócenos
+                                </a>
+                                <a href="contacto.html" class="inline-block px-8 py-4 bg-secondary text-primary font-medium rounded-full hover:bg-white transition-all duration-300">
+                                    Visítanos
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="swiper-slide relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/img/1.jpg')"></div>
+                    <div class="relative z-20 h-full flex items-center justify-center">
+                        <div class="container mx-auto px-4 text-center text-white">
+                            <h2 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate__animated animate__zoomIn">
+                                Ambiente Único
+                            </h2>
+                            <p class="text-xl md:text-2xl mb-8 animate__animated animate__fadeInUp animate__delay-1s max-w-3xl mx-auto">
+                                Un espacio diseñado para que disfrutes momentos especiales mientras saboreas el mejor café
+                            </p>
+                            <a href="contacto.html" class="inline-block px-8 py-4 bg-accent text-white font-medium rounded-full hover:bg-primary transform hover:scale-105 transition-all duration-300 animate__animated animate__pulse animate__infinite">
+                                <i class="mr-2">📍</i> Encuéntranos
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h1 class="banner-title">OCHETO COFFEE</h1>
-            <p class="banner-subtitle">Experiencia Cafetera Excepcional</p>
-            <a href="productos.html" class="cta-button">Ver Productos</a>
+            
+            <!-- Navigation buttons -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
         </div>
     </section>
 
-    <!-- Sobre Nosotros -->
-    <section class="about" id="sobre-nosotros">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>OCHETO COFFEE EXPRESS</h2>
-                    <p>En Ocheto Coffee apostamos por la calidad en cada taza: utilizamos granos seleccionados, bebidas
-                        de calidad
-                        preparadas con cuidado y acompañamientos frescos que complementan tu experiencia.</p>
-                    <p>Nuestro espacio está diseñado para que disfrutes de momentos especiales, ya sea trabajando,
-                        estudiando o compartiendo con amigos.</p>
+    <!-- Nueva Sección: Diagramas del Sistema -->
+    <section class="py-16 md:py-24 bg-light" id="diagramas">
+        <div class="container mx-auto px-4">
+            <!-- Título Centrado -->
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-accent mb-4 animate__animated animate__fadeInDown">
+                    Diagramas del Sistema 
+                </h2>
+                <div class="h-1 w-24 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate__animated animate__fadeInUp animate__delay-1s">
+                    Observa los diagramas creados para el análisis del sistema de la cafetería OCHETO. 
+                </p>
+            </div>
+
+            <!-- Carrusel de Diagramas -->
+            <div class="max-w-5xl mx-auto">
+                <div class="swiper diagram-swiper rounded-2xl overflow-hidden shadow-2xl animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="swiper-wrapper">
+                        <!-- Diagrama 1 -->
+                        <div class="swiper-slide">
+                            <div class="relative bg-white p-2 md:p-4">
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
+                                    <!-- Reemplaza esta imagen con tu diagrama 1 -->
+                                    <img src="assets/img/diagramas/DC.jpg" alt="Diagrama de contexto" class="h-full w-full object-contain">
+                                </div>
+                                <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    Diagrama de Contexto
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Diagrama 2 -->
+                        <div class="swiper-slide">
+                            <div class="relative bg-white p-2 md:p-4">
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
+                                    <!-- Reemplaza esta imagen con tu diagrama 2 -->
+                                    <img src="assets/img/diagramas/DFD.jpg" alt="Diagrama de de flujo de datos" class="h-full w-full object-contain">
+                                </div>
+                                <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    Diagrama de de flujo de datos
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Diagrama 3 -->
+                        <div class="swiper-slide">
+                            <div class="relative bg-white p-2 md:p-4">
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
+                                    <!-- Reemplaza esta imagen con tu diagrama 3 -->
+                                    <img src="assets/img/diagramas/ER.jpg" alt="Diagrama de Entidad relacion" class="h-full w-full object-contain">
+                                </div>
+                                <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    Diagrama de Entidad Relacion
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Diagrama 4 -->
+                        <div class="swiper-slide">
+                            <div class="relative bg-white p-2 md:p-4">
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
+                                    <!-- Reemplaza esta imagen con tu diagrama 4 -->
+                                     <img src="assets/img/diagramas/OO.png" alt="Diagrama Orientado a objetos" class="h-full w-full object-contain">
+                                </div>
+                                <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    Diagrama de clases UML
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Diagrama 5 -->
+                        <div class="swiper-slide">
+                            <div class="relative bg-white p-2 md:p-4">
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
+                                    <!-- Reemplaza esta imagen con tu diagrama 5 -->
+                                    <img src="assets/img/diagramas/CUN.png" alt="Diagrama de Caso de uso de negocio" class="h-full w-full object-contain">
+                                </div>
+                                <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    Diagrama de Caso de uso de negocio
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Diagrama 6 -->
+                        <div class="swiper-slide">
+                            <div class="relative bg-white p-2 md:p-4">
+                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
+                                    <!-- Reemplaza esta imagen con tu diagrama 5 -->
+                                    <img src="assets/img/diagramas/DCUS.jpg" alt="Diagrama de Caso de uso de sistema" class="h-full w-full object-contain">
+                                </div>
+                                <div class="absolute bottom-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    Diagrama de Caso de uso de sistema
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation buttons -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="about-image"></div>
+                
+                <!-- Descripción adicional -->
+                <div class="mt-8 text-center animate__animated animate__fadeInUp animate__delay-3s">
+                    <p class="text-gray-600 max-w-3xl mx-auto">
+                        Los diagramas presentados muestran la arquitectura completa del sistema de gestión de la cafetería OCHETO, 
+                        incluyendo procesos de venta, inventario, atención al cliente y gestión de proveedores.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros - CORREGIDO -->
+    <section class="py-16 md:py-24 bg-white" id="sobre-nosotros">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                <!-- Imagen -->
+                <div class="lg:w-1/2 order-2 lg:order-1">
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl group">
+                        <div class="h-80 md:h-96 lg:h-[500px] about-image bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                             style="background-image: url('assets/img/3.jpg')">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="font-heading text-xl font-bold mb-2">Ambiente Acogedor</h3>
+                            <p class="text-sm">Diseñado para tu comodidad</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Texto -->
+                <div class="lg:w-1/2 order-1 lg:order-2">
+                    <div class="mb-6">
+                        <span class="inline-block px-4 py-2 bg-accent text-white text-sm font-medium rounded-full mb-4">Sobre Nosotros</span>
+                        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-accent mb-6">
+                            OCHETO COFFEE EXPRESS
+                        </h2>
+                    </div>
+                    
+                    <div class="space-y-6 text-gray-700">
+                        <p class="text-lg leading-relaxed">
+                            En <span class="font-bold text-primary">Ocheto Coffee</span> apostamos por la <span class="font-bold">calidad en cada taza</span>: utilizamos granos seleccionados, bebidas de calidad preparadas con cuidado y acompañamientos frescos que complementan tu experiencia.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            Nuestro espacio está diseñado para que disfrutes de <span class="font-bold">momentos especiales</span>, ya sea trabajando, estudiando o compartiendo con amigos. Cada detalle ha sido cuidadosamente pensado para ofrecerte una experiencia única.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-6">
+                        <div class="text-center p-4 rounded-lg bg-light hover:shadow-lg transition-shadow duration-300">
+                            <div class="text-3xl text-primary mb-2">☕</div>
+                            <h3 class="font-bold text-accent mb-1">Café Premium</h3>
+                            <p class="text-sm text-gray-600">Granos seleccionados</p>
+                        </div>
+                        <div class="text-center p-4 rounded-lg bg-light hover:shadow-lg transition-shadow duration-300">
+                            <div class="text-3xl text-primary mb-2">🍰</div>
+                            <h3 class="font-bold text-accent mb-1">Repostería Fresca</h3>
+                            <p class="text-sm text-gray-600">Hecho diariamente</p>
+                        </div>
+                        <div class="text-center p-4 rounded-lg bg-light hover:shadow-lg transition-shadow duration-300">
+                            <div class="text-3xl text-primary mb-2">🏠</div>
+                            <h3 class="font-bold text-accent mb-1">Ambiente Acogedor</h3>
+                            <p class="text-sm text-gray-600">Diseño moderno</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contacto">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>OCHETO COFFEE</h3>
-                    <p>La mejor experiencia cafetera en un ambiente elegante y acogedor.</p>
+    <!-- Footer Actualizado -->
+    <footer class="bg-accent text-white pt-16 pb-10" id="contacto">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Grid de información -->
+                <div class="grid md:grid-cols-4 gap-8 lg:gap-12 mb-12">
+                    <!-- Logo y descripción (col-span-2 en desktop) -->
+                    <div class="md:col-span-2">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="h-12 w-12 rounded-full overflow-hidden border-2 border-secondary">
+                                <img src="assets/img/logo.jpg" alt="Logo Ocheto" class="h-full w-full object-cover">
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-heading text-2xl font-bold">OCHETO</span>
+                                <span class="text-sm text-secondary font-medium">COFFEE</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 max-w-md mb-6 text-sm">
+                            Un espacio minimalista dedicado al café de calidad. Donde cada detalle importa.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-instagram text-white"></i>
+                            </a>
+                            <a href="#" class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-facebook-f text-white"></i>
+                            </a>
+                            <a href="#" class="h-10 w-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors duration-300">
+                                <i class="fab fa-twitter text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Horarios -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold mb-6 pb-3 border-b border-secondary inline-block">Horarios</h3>
+                        <ul class="space-y-4 text-gray-300 text-sm">
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Lun - Vie:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">7:00 - 20:00</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Sábados:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">8:00 - 18:00</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-medium">Domingos:</span>
+                                <span class="bg-primary/20 px-3 py-1 rounded-full text-xs">9:00 - 16:00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Contacto -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold mb-6 pb-3 border-b border-secondary inline-block">Contacto</h3>
+                        <ul class="space-y-4 text-gray-300 text-sm">
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Teléfono</span>
+                                    <span>78823697</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Email</span>
+                                    <span>angelo_17jm@hotmail.com</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block mr-3 mt-1 text-secondary">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                                <div>
+                                    <span class="block font-medium">Ubicación</span>
+                                    <span class="text-xs">La Paz, Bolivia</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Horarios</h3>
-                    <ul>
-                        <li>Lunes a Viernes: 7:00 - 20:00</li>
-                        <li>Sábados: 8:00 - 18:00</li>
-                        <li>Domingos: 9:00 - 16:00</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li>Teléfono: 78823697</li>
-                        <li>Email: angelo_17jm@hotmail.com</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Síguenos</h3>
-                    <ul>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Dirección</h3>
-                    <iframe
+                
+                <!-- Mapa -->
+                <div class="mb-12 rounded-xl overflow-hidden shadow-2xl">
+                    <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.38414258601!2d-68.13554243390426!3d-16.49898739394061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f21001b5174c5%3A0x824aeeaf8c636ce1!2sOcheto%20Coffee!5e0!3m2!1ses-419!2sus!4v1762118633585!5m2!1ses-419!2sus"
-                        width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
+                        width="100%" 
+                        height="200" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="rounded-lg">
                     </iframe>
-                    <p>C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel
-                        Sajama., La
-                        Paz, Bolivia</p>
                 </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+                
+                <!-- Dirección detallada -->
+                <div class="mb-8 text-center">
+                    <p class="text-sm text-gray-300 max-w-2xl mx-auto">
+                        <i class="fas fa-map-pin text-secondary mr-2"></i>
+                        C. Oruro entre C. Murillo y Mariscal Santa Cruz | Av. Illampu cerca a la Esq. Santa Cruz Hotel Sajama., La Paz, Bolivia
+                    </p>
+                </div>
+                
+                <!-- Copyright y Enlaces -->
+                <div class="pt-8 border-t border-gray-700">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-4 md:mb-0 text-gray-400 text-sm">
+                            <p>&copy; 2025 Cafetería OCHETO. Todos los derechos reservados.</p>
+                        </div>
+                        <div class="flex space-x-6 text-sm">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Política de Privacidad</a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Términos de Servicio</a>
+                            <a href="contacto.html" class="text-secondary hover:text-white transition-colors duration-300">Contacto</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
-</body>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- JavaScript -->
+    <script>
+        // Configuración de Tailwind
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'heading': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#8B4513',
+                        'secondary': '#D4A76A',
+                        'accent': '#5D4037',
+                        'light': '#F5F5F5',
+                        'dark': '#2C2C2C',
+                    }
+                }
+            }
+        }
+        
+        // Aplicación principal con Alpine.js
+        function app() {
+            return {
+                init() {
+                    console.log('OCHETO COFFEE - Aplicación iniciada');
+                    
+                    // Inicializar Swiper después de que Alpine.js haya cargado
+                    this.$nextTick(() => {
+                        this.initBannerSwiper();
+                        this.initDiagramSwiper();
+                    });
+                },
+                
+                initBannerSwiper() {
+                    new Swiper('.banner-swiper', {
+                        direction: 'horizontal',
+                        loop: true,
+                        autoplay: {
+                            delay: 5000,
+                            disableOnInteraction: false,
+                        },
+                        speed: 1000,
+                        effect: 'fade',
+                        fadeEffect: {
+                            crossFade: true
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        }
+                    });
+                },
+                
+                initDiagramSwiper() {
+                    new Swiper('.diagram-swiper', {
+                        direction: 'horizontal',
+                        loop: true,
+                        autoplay: {
+                            delay: 5000,
+                            disableOnInteraction: false,
+                            // pauseOnMouseEnter: true,
+                        },
+                        speed: 800,
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                            dynamicBullets: true,
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        breakpoints: {
+                            640: {
+                                slidesPerView: 1,
+                                spaceBetween: 20,
+                            },
+                            768: {
+                                slidesPerView: 1,
+                                spaceBetween: 30,
+                            },
+                            1024: {
+                                slidesPerView: 1,
+                                spaceBetween: 40,
+                            },
+                        }
+                    });
+                }
+            }
+        }
+        
+        // Smooth scroll para enlaces internos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll para enlaces con hash
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Cerrar menú móvil si está abierto
+                        const mobileMenuBtn = document.querySelector('[x-data] [x-ref]');
+                        if (window.innerWidth < 1024) {
+                            const header = document.getElementById('header');
+                            const alpineData = header.__x.$data;
+                            if (alpineData && alpineData.mobileMenuOpen) {
+                                alpineData.mobileMenuOpen = false;
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Añadir clase de scroll al header
+            window.addEventListener('scroll', function () {
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Inicializar tooltips para móviles (touch)
+            const tooltipContainers = document.querySelectorAll('.tooltip-container');
+            tooltipContainers.forEach(container => {
+                container.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    const tooltip = this.querySelector('.tooltip-content');
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    
+                    // Ocultar después de 2 segundos
+                    setTimeout(() => {
+                        tooltip.style.opacity = '0';
+                        tooltip.style.visibility = 'hidden';
+                    }, 2000);
+                });
+            });
+            
+            // Añadir animaciones al hacer scroll para la nueva sección de diagramas
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const elements = entry.target.querySelectorAll('.animate__animated');
+                        elements.forEach((el, index) => {
+                            setTimeout(() => {
+                                el.classList.add('animate__fadeInUp');
+                            }, index * 200);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar sección de diagramas para animaciones
+            const diagramSection = document.getElementById('diagramas');
+            if (diagramSection) {
+                observer.observe(diagramSection);
+            }
+        });
+
+        // Smooth scroll para enlaces internos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll para enlaces con hash
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Cerrar menú móvil si está abierto
+                        const header = document.getElementById('header');
+                        if (header.__x && header.__x.$data && header.__x.$data.mobileMenuOpen) {
+                            header.__x.$data.mobileMenuOpen = false;
+                        }
+                    }
+                });
+            });
+            
+            // Cerrar menús dropdown al hacer clic fuera
+            document.addEventListener('click', function(event) {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(event.target)) {
+                        const menu = dropdown.querySelector('.dropdown-menu');
+                        if (menu) {
+                            menu.style.opacity = '0';
+                            menu.style.visibility = 'hidden';
+                            menu.style.transform = 'translateY(-10px)';
+                        }
+                    }
+                });
+                
+                // Cerrar búsqueda al hacer clic fuera
+                const searchBox = document.querySelector('.search-box');
+                const searchButton = document.querySelector('[x-on\\:click*="searchOpen"]');
+                if (searchBox && searchButton && !searchBox.contains(event.target) && !searchButton.contains(event.target)) {
+                    const header = document.getElementById('header');
+                    if (header.__x && header.__x.$data) {
+                        header.__x.$data.searchOpen = false;
+                    }
+                }
+            });
+            
+            // Inicializar tooltips para móviles (touch)
+            const tooltipContainers = document.querySelectorAll('.tooltip-container');
+            tooltipContainers.forEach(container => {
+                container.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    const tooltip = this.querySelector('.tooltip-content');
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    
+                    // Ocultar después de 2 segundos
+                    setTimeout(() => {
+                        tooltip.style.opacity = '0';
+                        tooltip.style.visibility = 'hidden';
+                    }, 2000);
+                });
+            });
+        });
+
+        function tooltipComponent() {
+            return {
+                show: false,
+                init() {
+                    // No se necesita inicialización especial
+                },
+                showTooltip() {
+                    this.show = true;
+                },
+                hideTooltip() {
+                    this.show = false;
+                }
+            }
+        }
+    </script>
+</body>
 </html>
